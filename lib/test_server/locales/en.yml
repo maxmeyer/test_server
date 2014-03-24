@@ -1,0 +1,27 @@
+---
+en:
+  errors:
+    default: 
+      summary: Unexpected Error...
+      details: Sorry, but I cannot fullfill your request. An unexpected error occured. Please ask your administrator for support.
+    internal_error: 
+      summary: Internal error...
+      details: 'Sorry, but I cannot fullfill your request. An internal error occured: "%{message}". Please notify the author of the software about the problem.'
+    user_error: 
+      summary: User Error...
+      details: Sorry, but I cannot fullfill your request. An error occured. There should be a better error message displayed here. Please notify the author of the software about the problem.
+    unreadable_config_file: 
+      summary: Unreadable config file...
+      details: 'Sorry, but I cannot fullfill your request. The config file "%{file}" given could not be read: "%{message}".'
+    sigint: 
+      summary: Program Execution Interrupted...
+      details: You've chosen to interrupt the program execution.
+    sigterm: 
+      summary: Program Execution Aborted...
+      details: I received a SIGTERM. Aborting program execution.
+    unknown_local_file: 
+      summary: Local File Unknown
+      details: Sorry, but I cannot fullfill your request. The requested file "%{file}" cannot be found in the local file repository.
+  views:
+    application:
+      title: Test Server
