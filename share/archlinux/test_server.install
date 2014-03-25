@@ -1,0 +1,15 @@
+post_install() {
+  echo ""
+  echo "Please place a config file at one of the following places:"
+  echo ""
+  echo " * $HOME/.config/test_server/config.yaml"
+  echo " * $HOME/.test_server/config.yaml"
+  echo " * /etc/test_server/config.yaml"
+  echo ""
+  echo  "An example config file can be found at \"/usr/share/test_server/examples/config.yaml.example\""
+  echo ""
+}
+
+post_upgrade() {
+  post_install
+}

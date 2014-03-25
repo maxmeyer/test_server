@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+export GEM_ROOT='<%= lookup('SOFTWARE_LIB') %>'
+export GEM_PATH='<%= lookup('SOFTWARE_LIB') %>'
+export GEM_HOME='<%= lookup('SOFTWARE_LIB') %>'
+
+export PATH="<%= lookup('SOFTWARE_LIB') %>/bin:$PATH"
+
+exec <%= lookup('SOFTWARE_BINARY') %> $*
