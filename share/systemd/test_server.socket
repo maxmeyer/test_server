@@ -1,0 +1,10 @@
+[Unit]
+Description=Socket for test server
+
+[Socket]
+ListenStream=127.0.0.1:8000
+After=network.target
+Requires=network.target
+
+[Install]
+WantedBy=sockets.target

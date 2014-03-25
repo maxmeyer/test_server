@@ -12,7 +12,7 @@ makedepends=(rubygems filegen phantomjs)
 #source=(http://gems.rubyforge.org/gems/$pkgname-$pkgver.gem)
 source=($pkgname-$pkgver.gem)
 noextract=($pkgname-$pkgver.gem)
-sha256sums=('8d35d2702358e23d4f60c7f80883dd2b0cebf9cd94aeeaab6c2491869fe79f9b')
+sha256sums=('75268c14dc898b8a90acebbcad30491638cb77ef394231cff9fb03b8d6911a70')
 
 package() {
   cd "$srcdir"

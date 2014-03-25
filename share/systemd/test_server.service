@@ -1,0 +1,9 @@
+[Unit]
+Description=Test server
+#Requires=test_server.socket
+
+[Service]
+ExecStart=/usr/bin/test_server serve
+
+[Install]
+WantedBy=multi-user.target
