@@ -1,0 +1,12 @@
+---
+# You might want to copy the following output to one of the allowed config
+# file paths - in the given order. But be aware that at 
+# <%= lookup('config_file') -%>, there might be a 
+# config file created during initialization.
+<% Array(lookup('allowed_config_file_paths')).each do |p| -%>
+# * <%= p %>
+<% end -%>
+
+<% TestServer::Config.options.delete_if { |o| [:expand_path, :gem_path].include? o }.each do |o| -%>
+:<%= o %>: <%= lookup(o) %>
+<% end -%>

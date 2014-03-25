@@ -1,5 +1,5 @@
 # encoding: utf-8
-module LocalPac
+module TestServer
   class NullAccessLogger
     def write(*args, &block); end
   end

@@ -82,14 +82,19 @@ module TestServer
       ]
     end
 
+    option :access_log, ::File.expand_path(::File.join(ENV['HOME'], '.local', 'share', 'test_server', 'log', 'access.log'))
+    option :api_key, SecureRandom.hex
     option :config_file, ::File.expand_path(::File.join(ENV['HOME'], '.config', 'test_server', 'config.yaml'))
-    option :sass_cache, ::File.expand_path(::File.join(ENV['HOME'], '.local', 'share', 'test_server', 'cache'))
+    option :debug_mode, false
+    option :environment, 'development'
+    option :executable, ::File.expand_path(::File.expand_path('../../../bin/test_server', __FILE__))
+    option :gem_path, Gem.path.collect {|p|::File.expand_path(p) }
+    option :listen, 'tcp://127.0.0.1:8000'
+    option :log_level, :info
     option :pid_file, ::File.expand_path(::File.join(ENV['HOME'], '.local', 'share', 'test_server', 'run', 'pid'))
     option :reload_config_signal, :USR1
-    option :listen, 'tcp://127.0.0.1:8000'
-    option :environment, 'development'
-    option :debug_mode, false
-    option :log_level, :info
+    option :reload_storage_signal, :USR2
+    option :sass_cache, ::File.expand_path(::File.join(ENV['HOME'], '.local', 'share', 'test_server', 'cache'))
 
     private
 

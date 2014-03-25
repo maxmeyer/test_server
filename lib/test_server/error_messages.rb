@@ -28,5 +28,40 @@ module TestServer
       summary: 'errors.user_error.summary',
       exit_code: 3,
     )
+
+    ErrorHandler.create(
+      exception: Sinatra::Param::InvalidParameterError,
+      details: 'errors.invalid_parameter.details',
+      summary: 'errors.invalid_parameter.summary',
+      exit_code: 4,
+    )
+
+    ErrorHandler.create(
+      exception: Exceptions::PidFileDoesNotExist,
+      details: 'errors.invalid_proxy_pac.details',
+      summary: 'errors.invalid_proxy_pac.summary',
+      exit_code: 5,
+    )
+
+    ErrorHandler.create(
+      exception: Exceptions::GivenUrlInvalid,
+      details: 'errors.invalid_url.details',
+      summary: 'errors.invalid_url.summary',
+      exit_code: 6,
+    )
+    
+    ErrorHandler.create(
+      exception: Exceptions::ServerListenStatementInvalid,
+      details: 'errors.invalid_listen_statement.details',
+      summary: 'errors.invalid_listen_statement.summary',
+      exit_code: 8,
+    )
+
+    ErrorHandler.create(
+      exception: Exceptions::AccessLogPathInvalid,
+      details: 'errors.invalid_access_log_path.details',
+      summary: 'errors.invalid_access_log_path.summary',
+      exit_code: 9,
+    )
   end
 end

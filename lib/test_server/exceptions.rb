@@ -20,5 +20,20 @@ module TestServer
 
     # raised if pid file does not exist
     class PidFileDoesNotExist < UserError; end
+
+    # raise if there are template syntax errrors
+    class ErbTemplateHasSyntaxErrors < InternalError; end
+
+    # raised if Template does not exist
+    class ErbTemplateIsUnknown < InternalError; end
+
+    # raised if listen statement is invalid
+    class ServerListenStatementInvalid < UserError; end
+
+    # raised if request is invalid
+    class GivenUrlInvalid < UserError; end
+
+    # raised if variable cannot be looked up
+    class VariableUnknown < InternalError; end
   end
 end

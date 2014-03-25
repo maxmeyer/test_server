@@ -22,6 +22,24 @@ en:
     unknown_local_file: 
       summary: Local File Unknown
       details: Sorry, but I cannot fullfill your request. The requested file "%{file}" cannot be found in the local file repository.
+    invalid_url: 
+      summary: Invalid URL...
+      details: Sorry, but your request is invalid. The URL "%{url}" is not a correct one. Allowed are URLs like "http://www.example.org" or "www.example.org".
+    invalid_access_log_path: 
+      summary: Invalid Path to Access Log...
+      details: Sorry, but I cannot start the server. The path "%{file}" to the access log is invalid. Maybe the directory "%{directory}" where the access log should be stored, does not exist.
+    invalid_parameter: 
+      summary: Invalid Parameter...
+      details: Sorry, but your request is invalid. The parameter "%{parameter}" is unknown or the format given cannot be accepted.
+    unreadable_config_file: 
+      summary: Unreadable config file...
+      details: 'Sorry, but I cannot fullfill your request. The config file "%{file}" given could not be read: "%{message}".'
+    invalid_pac_result: 
+      summary: Invalid result from pac file...
+      details: 'Sorry, but I cannot fullfill your request. The result "%{result}" of proxy.pac "%{file}" is invalid. Please fix the proxy.pac and try again.'
+    compress_pac_file_failed: 
+      summary: Pac file cannot be compressed...
+      details: 'Sorry, but an error occurred while I tried to compress the proxy.pac-file "%{file}": %{message}. Please fix the proxy.pac and try again.'
   views:
     application:
       title: Test Server

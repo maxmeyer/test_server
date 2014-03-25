@@ -5,19 +5,21 @@ module TestServer
 
       private
 
-      attr_reader :exception, :original_message, :handler_klass
+      attr_reader :exception, :original_message, :handler_klass, :backtrace
 
       public
 
       def initialize(exception, handler_klass = ErrorHandler)
         @exception        = exception.class
         @original_message = exception.message
+        @backtrace        = exception.backtrace
         @handler_klass    = handler_klass
       end
 
       def run
-        handler = handler_klass.find exception
+        handler                  = handler_klass.find exception
         handler.original_message = original_message
+        handler.backtrace        = backtrace
 
         handler.execute(parsed_message)
       end
