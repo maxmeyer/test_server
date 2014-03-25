@@ -17,5 +17,8 @@ module TestServer
 
     # reload of configuration failed
     class ReloadOfConfigurationFailed < InternalError; end
+
+    # raised if pid file does not exist
+    class PidFileDoesNotExist < UserError; end
   end
 end
