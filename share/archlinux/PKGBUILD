@@ -12,7 +12,7 @@ makedepends=(rubygems filegen phantomjs)
 #source=(http://gems.rubyforge.org/gems/$pkgname-$pkgver.gem)
 source=($pkgname-$pkgver.gem)
 noextract=($pkgname-$pkgver.gem)
-sha256sums=('75268c14dc898b8a90acebbcad30491638cb77ef394231cff9fb03b8d6911a70')
+sha256sums=('a7da3de8fd9cee627291b8e1908f39e482c879a6262d98c6c120017eb6079db0')
 
 package() {
   cd "$srcdir"
@@ -47,7 +47,6 @@ package() {
   rm -rf ${pkgdir}/${_library_dir}/{build_info,doc}
 
   install -D -m644 ${pkgdir}/$_share_dir/systemd/${pkgname}.service ${pkgdir}/$_systemd_dir/${pkgname}.service
-  install -D -m644 ${pkgdir}/$_share_dir/systemd/${pkgname}@.service ${pkgdir}/$_systemd_dir/${pkgname}@.service
   #install -D -m644 ${pkgdir}/$_share_dir/systemd/${pkgname}.socket ${pkgdir}/$_systemd_dir
 
   install -D -m644 ${pkgdir}${_share_dir}/../LICENSE.md "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"

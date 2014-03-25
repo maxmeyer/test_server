@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'sprockets'
   spec.add_runtime_dependency 'sprockets-helpers'
   spec.add_runtime_dependency 'sprockets-sass'
-  spec.add_runtime_dependency 'compass'
+  spec.add_runtime_dependency 'compass', '~>0.12'
   spec.add_runtime_dependency 'addressable'
   spec.add_runtime_dependency 'i18n'
   spec.add_runtime_dependency 'rack-contrib'
