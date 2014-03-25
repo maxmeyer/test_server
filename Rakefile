@@ -2,14 +2,14 @@
 
 require 'fedux_org/stdlib/rake'
 
-require 'local_pac/version'
+require 'test_server/version'
 
 def software
-  'local_pac'
+  'test_server'
 end
 
 def version
-  LocalPac::VERSION
+  TestServer::VERSION
 end
 
 def root_directory
