@@ -2,6 +2,13 @@ $LOAD_PATH <<::File.expand_path('../lib/', __FILE__)
 
 require 'sass'
 require 'test_server'
+require 'bundler'
+
+if %w{ development test }.include? ENV['RACK_ENV']
+  Bundler.require :default, :test, :development
+else
+  Bundler.require :default
+end
 
 TestServer.config.debug_mode = true if ENV['DEBUG']
 TestServer.config.log_level = ENV['LOG_LEVEL'] if ENV['LOG_LEVEL']
@@ -21,10 +28,6 @@ trap TestServer.config.reload_config_signal do
   rescue Exceptions::ReloadOfConfigurationFailed => e
     TestServer.ui_logger.fatal "Reload of configuration failed: #{e.message}"
   end
-end
-
-map '/' do
-  fail Sinatra::NotFound
 end
 
 #map '/v1/testrating/' do

@@ -83,6 +83,11 @@ module TestServer
     end
 
     option :config_file, ::File.expand_path(::File.join(ENV['HOME'], '.config', 'test_server', 'config.yaml'))
+    option :sass_cache, ::File.expand_path(::File.join(ENV['HOME'], '.local', 'share', 'test_server', 'cache'))
+    option :pid_file, ::File.expand_path(::File.join(ENV['HOME'], '.local', 'share', 'test_server', 'run', 'pid'))
+    option :reload_config_signal, :USR1
+    option :listen, 'tcp://127.0.0.1:8000'
+    option :environment, 'development'
     option :debug_mode, false
     option :log_level, :info
 

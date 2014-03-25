@@ -13,15 +13,6 @@ module TestServer
       use Rack::NestedParams
       use Rack::PostBodyContentTypeParser
 
-      not_found do
-        handler = ErrorHandler.find(Exceptions::PacFileUnknown)
-        handler.use(JSON.dump(name: env['PATH_INFO']))
-
-        @error_summary = handler.summary(:html)
-        @error_details = handler.details(:html)
-
-        halt 404, haml(:error, layout: :application)
-      end
       
       error do
         handler = ErrorHandler.find(StandardError)
@@ -31,57 +22,6 @@ module TestServer
 
         halt 500, haml(:error, layout: :application)
       end
-
-      error Exceptions::PacResultInvalid do
-        handler = ErrorHandler.find(Exceptions::PacResultInvalid)
-        handler.use(env['sinatra.error'].message)
-
-        @error_summary = handler.summary(:html)
-        @error_details = handler.details(:html)
-
-        halt 500, haml(:error, layout: :application)
-      end
-
-      error Exceptions::PacFileInvalid do
-        handler = ErrorHandler.find(Exceptions::PacFileInvalid)
-        handler.use(JSON.dump(name: env['sinatra.error'].message))
-
-        @error_summary = handler.summary(:html)
-        @error_details = handler.details(:html)
-
-        halt 401, haml(:error, layout: :application)
-      end
-
-      error Exceptions::GivenUrlInvalid do
-        handler = ErrorHandler.find(Exceptions::GivenUrlInvalid)
-        handler.use(env['sinatra.error'].message)
-
-        @error_summary = handler.summary(:html)
-        @error_details = handler.details(:html)
-
-        halt 401, haml(:error, layout: :application)
-      end
-
-      error Exceptions::GivenTimeInvalid do
-        handler = ErrorHandler.find(Exceptions::GivenTimeInvalid)
-        handler.use(env['sinatra.error'].message)
-
-        @error_summary = handler.summary(:html)
-        @error_details = handler.details(:html)
-
-        halt 401, haml(:error, layout: :application)
-      end
-
-      error Exceptions::GivenClientIpInvalid do
-        handler = ErrorHandler.find(Exceptions::GivenClientIpInvalid)
-        handler.use(env['sinatra.error'].message)
-
-        @error_summary = handler.summary(:html)
-        @error_details = handler.details(:html)
-
-        halt 401, haml(:error, layout: :application)
-      end
-
 
       set :raise_sinatra_param_exceptions, true
 
@@ -101,14 +41,11 @@ module TestServer
 
         use Rack::CommonLogger, TestServer::AccessLogger.new(TestServer.config.access_log)
         set :raise_errors, false
-        set :local_storage, TestServer::LocalStorage.new
       end
 
       configure :production do
         use Rack::CommonLogger, TestServer::AccessLogger.new(TestServer.config.access_log)
         set :raise_errors, false
-        set :local_storage, TestServer::LocalStorage.new
-        set :translation_table, TestServer::TranslationTable.new
       end
 
       configure :development do
@@ -122,10 +59,6 @@ module TestServer
       configure :test do
         use Rack::CommonLogger, TestServer::NullAccessLogger.new
         set :raise_errors, false
-      end
-      
-      configure do
-        mime_type :proxy_pac_file, 'application/x-ns-proxy-autoconfig'
       end
 
       helpers do

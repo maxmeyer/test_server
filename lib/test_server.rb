@@ -9,7 +9,8 @@ require 'rack/contrib/post_body_content_type_parser'
 require 'sprockets-helpers'
 require 'sinatra'
 require 'sinatra/param'
-require "sinatra/json"
+require 'sinatra/json'
+require 'sinatra/streaming'
 require 'json'
 require 'uglifier'
 require 'rack/protection'
@@ -35,5 +36,6 @@ require 'test_server/access_logger'
 require 'test_server/error_messages'
 require 'test_server/main'
 require 'test_server/template_repository'
+require 'test_server/null_access_logger'
 
 module TestServer; end
