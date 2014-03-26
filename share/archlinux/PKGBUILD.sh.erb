@@ -36,7 +36,7 @@ package() {
   _debug_mode=false
   _log_level=warn
   _environment=production
-  _listen_statement=${_run_dir}/puma.socket
+  _listen_statement=tcp://127.0.0.1:8000
   _reload_config_signal=USR1
   _sass_cache_directory=$_cache_dir
   _pid_file=${_run_dir}/pid
@@ -77,7 +77,7 @@ package() {
 
   SOFTWARE_BINARY=$_library_dir/gems/${pkgname}-${pkgver}/bin/${pkgname} \
     SOFTWARE_LIB=/usr/lib/test_server \
-    filegen  ${pkgdir}${_share_dir}/archlinux/startup.erb > ${pkgdir}${_bin_dir}/${pkgname}
+    filegen  ${pkgdir}${_share_dir}/archlinux/startup.sh.erb > ${pkgdir}${_bin_dir}/${pkgname}
 
   chmod a+x ${pkgdir}/${_bin_dir}/${pkgname}
 
