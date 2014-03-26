@@ -11,6 +11,8 @@ _sass_cache_directory=$_cache_dir
 
 post_install() {
   groupadd $_admin_group
+  groupadd $_service_group
+  useradd $_service_user
 
   for path in $_log_dir $_sass_cache_directory; do
     chown -R $_service_user:$_service_group $path
@@ -19,7 +21,7 @@ post_install() {
   # Admins are allowed to write, service is allowd to read, others can do nothing
   chown :$_admin_group $_data_dir 
   chmod 770 $_data_dir
-  setfacl -m g:$_service_group:r-x $_data_dir
+  setfacl -m g:$_service_group:rx $_data_dir
 
   echo ""
   echo "Please place a config file at one of the following places:"
@@ -38,4 +40,6 @@ post_upgrade() {
 
 post_remove() {
   groupdel $_admin_group
+  groupdel $_service_group
+  userdel $_service_user
 }
