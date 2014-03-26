@@ -29,6 +29,7 @@ group :development do
   gem 'tmrb', require: false
   gem 'yard', require: false
   gem 'inch', require: false
+  gem 'filegen'
 end
 
 group :profile do

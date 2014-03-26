@@ -26,6 +26,10 @@ def tmp_directory
   ::File.join(root_directory, 'tmp', "#{software}-#{version}")
 end
 
+def archlinux_build_directory
+  ::File.join(root_directory, 'share', 'archlinux')
+end
+
 def gem_file
   ::File.join(root_directory, 'pkg', "#{software}-#{version}.gem")
 end
@@ -46,13 +50,30 @@ file tmp_directory do
   FileUtils.mkdir_p tmp_directory
 end
 
-namespace :gem do
-  desc 'build tar file'
-  task :package => [gem_file, tmp_directory] do
-    FileUtils.mv ::File.join(pkg_directory, "#{software}-#{version}.gem"), tmp_directory
+file archlinux_build_directory do
+  FileUtils.mkdir_p archlinux_build_directory
+end
 
-    Dir.chdir('tmp') do
-      sh "tar -czf #{tar_file} #{::File.basename tmp_directory}"
+namespace :gem do
+  desc 'build arch linux package'
+  task :archlinux_package => [gem_file, archlinux_build_directory] do
+    FileUtils.mv ::File.join(pkg_directory, "#{software}-#{version}.gem"), archlinux_build_directory
+
+    generator = Filegen::Rubygen.new
+    template = File.read(File.expand_path('../share/archlinux/PKGBUILD.sh.erb', __FILE__))
+    build_file = File.expand_path('../share/archlinux/PKGBUILD', __FILE__)
+
+    Dir.chdir(archlinux_build_directory) do
+      sha = %x[makepkg -g 2>/dev/null]
+      data = {
+        sha: sha
+      }
+
+      File.open(build_file, 'w') do |f|
+        f.write generator.run(template, build_file)
+      end
+
+      sh "makepkg -f"
     end
   end
 end

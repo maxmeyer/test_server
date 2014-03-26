@@ -1,0 +1,55 @@
+# Maintainer: Dennis Guennewig dg1|vrnetze.de
+pkgname=test_server
+pkgver=0.0.1
+pkgrel=1
+pkgdesc="test server for proxy testing"
+arch=(i686 x86_64)
+url="https://github.com/dg-vrnetze/${pkgname}"
+license=('MIT')
+depends=('ruby' 'libatomic_ops')
+install=${pkgname}.install
+makedepends=(rubygems filegen phantomjs)
+#source=(http://gems.rubyforge.org/gems/$pkgname-$pkgver.gem)
+source=($pkgname-$pkgver.gem)
+noextract=($pkgname-$pkgver.gem)
+sha256sums=('<%= lookup('sha') %>')
+
+package() {
+  cd "$srcdir"
+
+  _library_dir=/usr/lib/${pkgname}
+  _share_dir="${_library_dir}/gems/${pkgname}-${pkgver}/share"
+  _systemd_dir=/usr/lib/systemd/system
+  _bin_dir=/usr/bin
+  _data_dir=/var/${pkgname}/data
+  _log_dir=/var/log/${pkgname}
+  _config_dir=/etc/${pkgname}
+  _examples_dir=/usr/share/${pkgname}/examples
+
+  install -d ${pkgdir}$_library_dir 
+  install -d ${pkgdir}$_bin_dir 
+  install -d ${pkgdir}$_systemd_dir 
+  install -d ${pkgdir}$_data_dir
+  install -d ${pkgdir}$_log_dir
+  install -d ${pkgdir}$_config_dir
+
+  msg "Starting download of gems. Don't get alert if the download takes a lot of time. Since rubygems 2.2.0 a new algorithm to resolve dependencies is used. Upgrade to > 2.2.0 via sudo /usr/bin/gem update --system to improve performance."
+
+  GEM_HOME="${pkgdir}${_library_dir}" GEM_ROOT="${pkgdir}${_library_dir}" GEM_PATH="${pkgdir}${_library_dir}" /usr/bin/gem install --env-shebang --wrappers --no-ri --no-rdoc --no-prerelease --install-dir ${pkgdir}${_library_dir} $pkgname-$pkgver.gem
+  GEM_HOME="${pkgdir}${_library_dir}" GEM_ROOT="${pkgdir}${_library_dir}" GEM_PATH="${pkgdir}${_library_dir}" /usr/bin/gem install --env-shebang --wrappers --no-ri --no-rdoc --no-prerelease --install-dir ${pkgdir}${_library_dir} puma
+
+  install -D -m 644 ${pkgdir}${_share_dir}/archlinux/config.yaml ${pkgdir}${_examples_dir}/config.yaml.example
+
+  SOFTWARE_BINARY=$_library_dir/gems/${pkgname}-${pkgver}/bin/${pkgname} SOFTWARE_LIB=/usr/lib/test_server filegen  ${pkgdir}${_share_dir}/archlinux/startup.erb > ${pkgdir}${_bin_dir}/${pkgname}
+
+  chmod a+x ${pkgdir}/${_bin_dir}/${pkgname}
+  rm -rf ${pkgdir}/${_library_dir}/cache
+  rm -rf ${pkgdir}/${_library_dir}/{build_info,doc}
+
+  install -D -m644 ${pkgdir}/$_share_dir/systemd/${pkgname}.service ${pkgdir}/$_systemd_dir/${pkgname}.service
+  #install -D -m644 ${pkgdir}/$_share_dir/systemd/${pkgname}.socket ${pkgdir}/$_systemd_dir
+
+  install -D -m644 ${pkgdir}${_share_dir}/../LICENSE.md "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
+
+# vim:set ts=2 sw=2 et:
