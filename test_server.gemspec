@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'thor'
   spec.add_runtime_dependency 'sass'
-  spec.add_runtime_dependency 'haml', '~>4.0'
+  spec.add_runtime_dependency 'haml', '~>4.0.0'
   spec.add_runtime_dependency 'uglifier'
   spec.add_runtime_dependency 'therubyracer'
   spec.add_runtime_dependency 'sprockets'

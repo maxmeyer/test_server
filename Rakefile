@@ -6,6 +6,7 @@
 require 'filegen'
 require 'fedux_org/stdlib/rake'
 require 'test_server/version'
+require 'open3'
 
 def software
   'test_server'
@@ -55,6 +56,10 @@ file archlinux_build_directory do
   FileUtils.mkdir_p archlinux_build_directory
 end
 
+def extract_sha
+  %x[makepkg -g 2>/dev/null].split(/\n/).find { |l| l =~ /sha256/ }
+end
+
 namespace :package do
   desc 'build arch linux package'
   task :archlinux => [gem_file, archlinux_build_directory] do
@@ -65,9 +70,12 @@ namespace :package do
     build_file = File.expand_path('../share/archlinux/PKGBUILD', __FILE__)
 
     Dir.chdir(archlinux_build_directory) do
-      sha = %x[makepkg -g 2>/dev/null].chomp
+      File.open(build_file, 'w') do |f|
+        f.write generator.run(template, { sha: nil })
+      end
+
       data = {
-        sha: sha
+        sha: extract_sha
       }
 
       File.open(build_file, 'w') do |f|
