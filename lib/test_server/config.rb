@@ -76,8 +76,8 @@ module TestServer
 
     def allowed_config_file_paths
       [
-        ::File.expand_path(::File.join(process_environment.fetch('HOME'), '.config', 'test_server', 'config.yaml')),
-        ::File.expand_path(::File.join(process_environment.fetch('HOME'), '.test_server', 'config.yaml')),
+        ::File.expand_path(::File.join(self.class.process_environment.fetch('HOME'), '.config', 'test_server', 'config.yaml')),
+        ::File.expand_path(::File.join(self.class.process_environment.fetch('HOME'), '.test_server', 'config.yaml')),
         ::File.expand_path(::File.join('/etc', 'test_server', 'config.yaml')),
         ::File.expand_path('../../../files/config.yaml', __FILE__),
       ]

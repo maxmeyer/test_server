@@ -39,12 +39,12 @@ require 'test_server/exceptions'
 require 'test_server/error_handler'
 require 'test_server/error_messages'
 
+require 'test_server/process_environment'
 require 'test_server/config'
 require 'test_server/version'
 require 'test_server/main'
 require 'test_server/data'
 require 'test_server/erb_generator'
-require 'test_server/process_environment'
 
 require 'test_server/actions/create_directory'
 require 'test_server/actions/create_file'
