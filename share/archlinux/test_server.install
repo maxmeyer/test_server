@@ -10,9 +10,13 @@ _cache_dir=/var/cache/${pkgname}
 _sass_cache_directory=$_cache_dir
 
 post_install() {
-  groupadd $_admin_group
-  groupadd $_service_group
-  useradd $_service_user
+  if [ -z "$(getent group $_admin_group)" ]; then
+    groupadd $_admin_group
+  fi
+
+  if [ -z "$(getent passwd $_service_user)" ]; then
+    useradd $_service_user
+  fi
 
   for path in $_log_dir $_sass_cache_directory; do
     chown -R $_service_user:$_service_group $path
@@ -38,8 +42,17 @@ post_upgrade() {
   post_install
 }
 
+pre_remove() {
+  systemctl stop $pkgname
+  systemctl disable $pkgname
+}
+
 post_remove() {
-  groupdel $_admin_group
-  groupdel $_service_group
-  userdel $_service_user
+  if [ -z "$(getent group $_admin_group)" ]; then
+    groupdel $_admin_group
+  fi
+
+  if [ -z "$(getent passwd $_service_user)" ]; then
+    userdel $_service_user
+  fi
 }
