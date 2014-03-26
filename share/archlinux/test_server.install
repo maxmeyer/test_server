@@ -24,7 +24,6 @@ post_install() {
 
   # Admins are allowed to write, service is allowd to read, others can do nothing
   chown :$_admin_group $_data_dir 
-  chmod 770 $_data_dir
   setfacl -m g:$_service_group:rx $_data_dir
 
   echo ""

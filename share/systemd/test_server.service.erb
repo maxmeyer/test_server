@@ -1,0 +1,10 @@
+[Unit]
+Description=<%= lookup('DESCRIPTION') %>
+
+[Service]
+User=<%= lookup('SERVICE_USER') %>
+Group=<%= lookup('SERVICE_USER') %>
+ExecStart=<%= lookup('COMMAND') %>
+
+[Install]
+WantedBy=multi-user.target

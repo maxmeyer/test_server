@@ -2,13 +2,13 @@ $LOAD_PATH <<::File.expand_path('../lib/', __FILE__)
 
 require 'sass'
 require 'test_server'
-require 'bundler'
+#require 'bundler'
 
-if %w{ development test }.include? ENV['RACK_ENV']
-  Bundler.require :default, :test, :development
-else
-  Bundler.require :default
-end
+#if %w{ development test }.include? ENV['RACK_ENV']
+#  Bundler.require :default, :test, :development
+#else
+#  Bundler.require :default
+#end
 
 TestServer.config.debug_mode = true if ENV['DEBUG']
 TestServer.config.log_level = ENV['LOG_LEVEL'] if ENV['LOG_LEVEL']

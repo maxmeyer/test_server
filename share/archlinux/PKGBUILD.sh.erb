@@ -40,11 +40,12 @@ package() {
   _reload_config_signal=USR1
   _sass_cache_dir=$_cache_dir
   _pid_file=${_run_dir}/pid
+  _executable_file=${pkgdir}${_bin_dir}/${pkgname}
 
   install -d ${pkgdir}$_library_dir 
   install -d ${pkgdir}$_bin_dir 
   install -d ${pkgdir}$_systemd_dir 
-  install -d ${pkgdir}$_data_dir
+  install -d -m 770 ${pkgdir}$_data_dir
   install -d ${pkgdir}$_log_dir
   install -d ${pkgdir}$_config_dir
   install -d ${pkgdir}$_run_dir
@@ -60,6 +61,12 @@ package() {
     SERVICE_USER=$_service_user \
     SERVICE_GROUP=$_service_group \
     filegen  ${pkgdir}${_share_dir}/archlinux/tmpfiles.conf.erb > ${pkgdir}${_tmp_files_file}
+
+  COMMAND="${_executable_file} serve" \
+    DESCRIPTION='Server to proxy tests'
+    SERVICE_USER=$_service_user \
+    SERVICE_GROUP=$_service_group \
+    filegen  ${pkgdir}${_share_dir}/systemd/$pkgname.service.erb > ${pkgdir}/$_systemd_dir/${pkgname}.service
 
   chmod 644 ${pkgdir}${_tmp_files_file}
 
@@ -78,7 +85,7 @@ package() {
 
   SOFTWARE_BINARY=$_library_dir/gems/${pkgname}-${pkgver}/bin/${pkgname} \
     SOFTWARE_LIB=/usr/lib/test_server \
-    filegen  ${pkgdir}${_share_dir}/archlinux/startup.sh.erb > ${pkgdir}${_bin_dir}/${pkgname}
+    filegen  ${pkgdir}${_share_dir}/archlinux/startup.sh.erb > $_executable_file
 
   chmod a+x ${pkgdir}/${_bin_dir}/${pkgname}
 
