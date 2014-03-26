@@ -1,2 +1,11 @@
 ---
 :access_log: /var/log/test_server/access.log
+:config_file: /etc/test_server/config.yaml
+:debug_mode: false
+:environment: production
+:listen: tcp://127.0.0.1:8000
+:log_level: warn
+:pid_file: /run/test_server/pid
+:reload_config_signal: USR1
+:reload_storage_signal: USR2
+:sass_cache: /var/cache/test_server

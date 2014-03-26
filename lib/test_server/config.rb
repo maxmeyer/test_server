@@ -83,7 +83,6 @@ module TestServer
     end
 
     option :access_log, ::File.expand_path(::File.join(ENV['HOME'], '.local', 'share', 'test_server', 'log', 'access.log'))
-    option :api_key, SecureRandom.hex
     option :config_file, ::File.expand_path(::File.join(ENV['HOME'], '.config', 'test_server', 'config.yaml'))
     option :debug_mode, false
     option :environment, 'development'
