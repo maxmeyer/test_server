@@ -28,10 +28,12 @@ package() {
   _cache_dir=/var/cache/${pkgname}
   _run_dir=/run/${pkgname}
   _tmp_files_dir=/etc/tmpfiles.d
+  _defaults_dir=/etc/default
   _tmp_files_file=${_tmp_files_dir}/${pkgname}
   _config_file=${_config_dir}/config.yaml
   _service_user=$pkgname
   _service_group=$pkgname
+  _service_environment_file=${_defaults_dir}/${pkgname}
   _access_log_file=${_log_dir}/access.log
   _debug_mode=false
   _log_level=warn
@@ -52,6 +54,7 @@ package() {
   install -d ${pkgdir}$_tmp_files_dir
   install -d ${pkgdir}$_sass_cache_dir
 
+
   msg "Starting download of gems. Don't get alert if the download takes a lot of time. Since rubygems 2.2.0 a new algorithm to resolve dependencies is used. Upgrade to > 2.2.0 via sudo /usr/bin/gem update --system to improve performance."
 
   GEM_HOME="${pkgdir}${_library_dir}" GEM_ROOT="${pkgdir}${_library_dir}" GEM_PATH="${pkgdir}${_library_dir}" /usr/bin/gem install --env-shebang --wrappers --no-ri --no-rdoc --no-prerelease --install-dir ${pkgdir}${_library_dir} $pkgname-$pkgver.gem
@@ -66,7 +69,11 @@ package() {
     DESCRIPTION='Server to proxy tests'
     SERVICE_USER=$_service_user \
     SERVICE_GROUP=$_service_group \
-    filegen  ${pkgdir}${_share_dir}/systemd/$pkgname.service.erb > ${pkgdir}/$_systemd_dir/${pkgname}.service
+    DEFAULTS_FILE=$_service_environment_file \
+    filegen  ${pkgdir}${_share_dir}/systemd/${pkgname}.service.erb > ${pkgdir}/$_systemd_dir/${pkgname}.service
+
+  VARIABLES="HOME=/home/$_service_user" \
+    filegen  ${pkgdir}${_share_dir}/archlinux/defaults.sh.erb > ${pkgdir}/${_service_environment_file}
 
   chmod 644 ${pkgdir}${_tmp_files_file}
 

@@ -15,7 +15,7 @@ post_install() {
   fi
 
   if [ -z "$(getent passwd $_service_user)" ]; then
-    useradd $_service_user
+    useradd -m $_service_user
   fi
 
   for path in $_log_dir $_sass_cache_directory; do
@@ -47,6 +47,10 @@ pre_remove() {
 }
 
 post_remove() {
+  echo ""
+  echo "Please remove the home directory of the service user ${_service_user} yourself."
+  echo ""
+
   if [ -z "$(getent group $_admin_group)" ]; then
     groupdel $_admin_group
   fi

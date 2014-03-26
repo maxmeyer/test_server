@@ -5,6 +5,7 @@ Description=<%= lookup('DESCRIPTION') %>
 User=<%= lookup('SERVICE_USER') %>
 Group=<%= lookup('SERVICE_USER') %>
 ExecStart=<%= lookup('COMMAND') %>
+EnvironmentFile=<%= lookup('DEFAULTS_FILE') %>
 
 [Install]
 WantedBy=multi-user.target
