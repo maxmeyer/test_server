@@ -25,6 +25,18 @@ package() {
   _log_dir=/var/log/${pkgname}
   _config_dir=/etc/${pkgname}
   _examples_dir=/usr/share/${pkgname}/examples
+  _cache_dir=/var/cache/${pkgname}
+  _run_dir=/run/${pkgname}
+  _tmp_files_file=/etc/tmpfiles.d/${pkgname}
+  _config_file=${_config_dir}/config.yaml
+  _service_user=$pkgname
+  _service_group=$pkgname
+  _access_log=${_log_dir}/access.log
+  _debug_mode=false
+  _log_level=warn
+  _listen_statement=${_run_dir}/puma.socket
+  _reload_config_signal=USR1
+  _sass_cache_directory=$_cache_dir
 
   install -d ${pkgdir}$_library_dir 
   install -d ${pkgdir}$_bin_dir 
@@ -32,6 +44,7 @@ package() {
   install -d ${pkgdir}$_data_dir
   install -d ${pkgdir}$_log_dir
   install -d ${pkgdir}$_config_dir
+  install -d ${pkgdir}$_run_dir
 
   msg "Starting download of gems. Don't get alert if the download takes a lot of time. Since rubygems 2.2.0 a new algorithm to resolve dependencies is used. Upgrade to > 2.2.0 via sudo /usr/bin/gem update --system to improve performance."
 
@@ -40,9 +53,32 @@ package() {
 
   install -D -m 644 ${pkgdir}${_share_dir}/archlinux/config.yaml ${pkgdir}${_examples_dir}/config.yaml.example
 
-  SOFTWARE_BINARY=$_library_dir/gems/${pkgname}-${pkgver}/bin/${pkgname} SOFTWARE_LIB=/usr/lib/test_server filegen  ${pkgdir}${_share_dir}/archlinux/startup.erb > ${pkgdir}${_bin_dir}/${pkgname}
+  RUN_DIR=$_run_dir \
+    SERVICE_USER=$_service_user \
+    SERVICE_GROUP=$_service_group \
+    filegen  ${pkgdir}${_share_dir}/archlinux/tmpfiles.conf.erb > ${pkgdir}${_tmp_files_file}
+
+  chmod 644 ${pkgdir}${_tmp_files_file}
+
+  ACCESS_LOG=$_access_log_file \
+    CONFIG_FILE=$_config_file \
+    DEBUG_MODE=$_debug_mode \
+    ENVIRONMENT=$_environment \
+    LISTEN=$_listen_statement \
+    LOG_LEVEL=$_log_level \
+    PID_FILE=$_pid_file \
+    RELOAD_CONFIG_SIGNAL=$_reload_config_signal \
+    SASS_CACHE=$_sass_cache_directory \
+    filegen  ${pkgdir}${_share_dir}/archlinux/config.yaml.erb > ${pkgdir}${_config_file}
+
+  chmod 644 ${pkgdir}${_config_file}
+
+  SOFTWARE_BINARY=$_library_dir/gems/${pkgname}-${pkgver}/bin/${pkgname} \
+    SOFTWARE_LIB=/usr/lib/test_server \
+    filegen  ${pkgdir}${_share_dir}/archlinux/startup.erb > ${pkgdir}${_bin_dir}/${pkgname}
 
   chmod a+x ${pkgdir}/${_bin_dir}/${pkgname}
+
   rm -rf ${pkgdir}/${_library_dir}/cache
   rm -rf ${pkgdir}/${_library_dir}/{build_info,doc}
 
