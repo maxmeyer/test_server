@@ -27,16 +27,19 @@ package() {
   _examples_dir=/usr/share/${pkgname}/examples
   _cache_dir=/var/cache/${pkgname}
   _run_dir=/run/${pkgname}
-  _tmp_files_file=/etc/tmpfiles.d/${pkgname}
+  _tmp_files_dir=/etc/tmpfiles.d
+  _tmp_files_file=${_tmp_files_dir}/${pkgname}
   _config_file=${_config_dir}/config.yaml
   _service_user=$pkgname
   _service_group=$pkgname
-  _access_log=${_log_dir}/access.log
+  _access_log_file=${_log_dir}/access.log
   _debug_mode=false
   _log_level=warn
+  _environment=production
   _listen_statement=${_run_dir}/puma.socket
   _reload_config_signal=USR1
   _sass_cache_directory=$_cache_dir
+  _pid_file=${_run_dir}/pid
 
   install -d ${pkgdir}$_library_dir 
   install -d ${pkgdir}$_bin_dir 
@@ -45,13 +48,12 @@ package() {
   install -d ${pkgdir}$_log_dir
   install -d ${pkgdir}$_config_dir
   install -d ${pkgdir}$_run_dir
+  install -d ${pkgdir}$_tmp_files_dir
 
   msg "Starting download of gems. Don't get alert if the download takes a lot of time. Since rubygems 2.2.0 a new algorithm to resolve dependencies is used. Upgrade to > 2.2.0 via sudo /usr/bin/gem update --system to improve performance."
 
   GEM_HOME="${pkgdir}${_library_dir}" GEM_ROOT="${pkgdir}${_library_dir}" GEM_PATH="${pkgdir}${_library_dir}" /usr/bin/gem install --env-shebang --wrappers --no-ri --no-rdoc --no-prerelease --install-dir ${pkgdir}${_library_dir} $pkgname-$pkgver.gem
   GEM_HOME="${pkgdir}${_library_dir}" GEM_ROOT="${pkgdir}${_library_dir}" GEM_PATH="${pkgdir}${_library_dir}" /usr/bin/gem install --env-shebang --wrappers --no-ri --no-rdoc --no-prerelease --install-dir ${pkgdir}${_library_dir} puma
-
-  install -D -m 644 ${pkgdir}${_share_dir}/archlinux/config.yaml ${pkgdir}${_examples_dir}/config.yaml.example
 
   RUN_DIR=$_run_dir \
     SERVICE_USER=$_service_user \

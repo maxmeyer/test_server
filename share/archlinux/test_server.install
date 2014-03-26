@@ -6,7 +6,7 @@ post_install() {
   echo " * $HOME/.test_server/config.yaml"
   echo " * /etc/test_server/config.yaml"
   echo ""
-  echo  "An example config file can be found at \"/usr/share/test_server/examples/config.yaml.example\""
+  echo "The package contains a \"config.yaml\" which has been placed at /etc/test_server/config.yaml during package install. Feel free to modify it."
   echo ""
 }
 
