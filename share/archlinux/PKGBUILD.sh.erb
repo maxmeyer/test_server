@@ -38,7 +38,7 @@ package() {
   _environment=production
   _listen_statement=tcp://127.0.0.1:8000
   _reload_config_signal=USR1
-  _sass_cache_directory=$_cache_dir
+  _sass_cache_dir=$_cache_dir
   _pid_file=${_run_dir}/pid
 
   install -d ${pkgdir}$_library_dir 
@@ -49,6 +49,7 @@ package() {
   install -d ${pkgdir}$_config_dir
   install -d ${pkgdir}$_run_dir
   install -d ${pkgdir}$_tmp_files_dir
+  install -d ${pkgdir}$_sass_cache_dir
 
   msg "Starting download of gems. Don't get alert if the download takes a lot of time. Since rubygems 2.2.0 a new algorithm to resolve dependencies is used. Upgrade to > 2.2.0 via sudo /usr/bin/gem update --system to improve performance."
 
@@ -70,7 +71,7 @@ package() {
     LOG_LEVEL=$_log_level \
     PID_FILE=$_pid_file \
     RELOAD_CONFIG_SIGNAL=$_reload_config_signal \
-    SASS_CACHE=$_sass_cache_directory \
+    SASS_CACHE=$_sass_cache_dir \
     filegen  ${pkgdir}${_share_dir}/archlinux/config.yaml.erb > ${pkgdir}${_config_file}
 
   chmod 644 ${pkgdir}${_config_file}
