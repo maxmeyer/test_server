@@ -10,6 +10,7 @@ depends=('ruby' 'libatomic_ops')
 install=${pkgname}.install
 makedepends=(rubygems filegen phantomjs)
 #source=(http://gems.rubyforge.org/gems/$pkgname-$pkgver.gem)
+backup=/etc/${pkgname}/config.yaml
 source=($pkgname-$pkgver.gem)
 noextract=($pkgname-$pkgver.gem)
 <%= lookup('sha') %>
@@ -27,7 +28,7 @@ package() {
   _examples_dir=/usr/share/${pkgname}/examples
   _cache_dir=/var/cache/${pkgname}
   _run_dir=/run/${pkgname}
-  _tmp_files_dir=/etc/tmpfiles.d
+  _tmp_files_dir=/usr/lib/tmpfiles.d
   _defaults_dir=/etc/default
   _tmp_files_file=${_tmp_files_dir}/${pkgname}.conf
   _config_file=${_config_dir}/config.yaml
