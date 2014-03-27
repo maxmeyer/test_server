@@ -17,8 +17,24 @@ describe 'Fetch Test Data via Streaming' do
   end
 
   it 'downloads stream' do
-    visit('/2')
+    visit('/default/2')
+
+    expect(page.status_code).to be 200
     expect(page).to have_content('data')
+  end
+
+  it 'serves eicar test string to check if virus scanners find that string' do
+    eicar = [ 'X', '5', 'O', '!', 'P', '%', '@', 'A', 'P', '[', '4', "\\", 'P',
+              'Z', 'X', '5', '4', '(', 'P', '^', ')', '7', 'C', 'C', ')', '7',
+              '}', '$', 'E', 'I', 'C', 'A', 'R', '-', 'S', 'T', 'A', 'N', 'D',
+              'A', 'R', 'D', '-', 'A', 'N', 'T', 'I', 'V', 'I', 'R', 'U', 'S',
+              '-', 'T', 'E', 'S', 'T', '-', 'F', 'I', 'L', 'E', '!', '$', 'H',
+              '+', 'H', '*' ]
+
+    visit('/eicar/')
+
+    expect(page.status_code).to be 200
+    expect(page).to have_content(eicar.join)
   end
 
 end

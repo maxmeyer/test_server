@@ -38,8 +38,8 @@ map '/v1/test/streaming' do
   run TestServer::App::StreamingController
 end
 
-map '/v1/test/plain' do
-  run TestServer::App::PlainController
+map '/v1/test/string' do
+  run TestServer::App::StringController
 end
 
 map TestServer::App::AssetsController.assets_prefix do

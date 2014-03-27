@@ -1,17 +1,36 @@
 # encoding: utf-8
 module TestServer
   module App
-    class PlainController < ApplicationController
+    class StringController < ApplicationController
+      get '/' do
+        redirect '/default/'
+      end
 
-      helpers Sinatra::Param
-
-      get '/?:count?' do
+      get '/default/?:count?' do
         param :count, Integer, default: 1
-        param :cache_control, String
 
-        configure_caching(params[:cache_control])
+        generate_string(params[:count])
+      end
 
-        "Plain Data\n" * params[:count]
+      get '/no-caching/?:count?' do
+        param :count, Integer, default: 1
+
+        cache_control :no_cache, :must_revalidate
+
+        generate_string(params[:count])
+      end
+
+      get '/expires/?:timeout?' do
+        param :timeout, Integer, default: 500
+        param :count, Integer, default: 1
+
+        expires params[:timeout], :public, :must_revalidate
+
+        generate_string(params[:count])
+      end
+
+      get '/eicar/' do
+        generate_eicar.join
       end
     end
   end

@@ -13,6 +13,7 @@ module TestServer
       use Rack::NestedParams
       use Rack::PostBodyContentTypeParser
 
+      helpers Sinatra::Param
       
       error do
         handler = ErrorHandler.find(StandardError)
@@ -72,13 +73,17 @@ module TestServer
           I18n.t(*args)
         end
 
-        def configure_caching(option)
-          case option.to_s.underscore.to_sym
-          when :no_cache
-            cache_control :no_cache
-          else
-            cache_control :public, :must_revalidate, :max_age => 60
-          end
+        def generate_string(count, string = "Plain Data\n")
+          string * count
+        end
+
+        def generate_eicar
+          [ 'X', '5', 'O', '!', 'P', '%', '@', 'A', 'P', '[', '4', "\\", 'P',
+            'Z', 'X', '5', '4', '(', 'P', '^', ')', '7', 'C', 'C', ')', '7',
+            '}', '$', 'E', 'I', 'C', 'A', 'R', '-', 'S', 'T', 'A', 'N', 'D',
+            'A', 'R', 'D', '-', 'A', 'N', 'T', 'I', 'V', 'I', 'R', 'U', 'S',
+            '-', 'T', 'E', 'S', 'T', '-', 'F', 'I', 'L', 'E', '!', '$', 'H',
+            '+', 'H', '*' ]
         end
       end
     end
