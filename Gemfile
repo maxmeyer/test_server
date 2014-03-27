@@ -42,6 +42,7 @@ gem 'bundler', '~> 1.3', group: [:development, :test], require: false
 gem 'erubis', group: [:development, :test]
 gem 'versionomy', group: [:development, :test], require: false
 gem 'activesupport', '~> 4.0.0', group: [:development, :test], require: false
+gem 'launchy', group: [:development, :test]
 
 gem 'awesome_print', group: [:development, :test], require: 'ap'
 
