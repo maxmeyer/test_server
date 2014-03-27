@@ -33,6 +33,14 @@ module TestServer
         generate_eicar.join
       end
 
+      get '/sleep/?:count?' do
+        param :count, Integer, default: 120
+
+        sleep params[:count]
+
+        generate_string(1)
+      end
+
       get '/no-caching/sleep/?:count?' do
         cache_control :no_cache, :must_revalidate
         param :count, Integer, default: 120
