@@ -34,8 +34,12 @@ end
 #  run TestServer::App::TestRatingController
 #end
 
-map '/v1/test/' do
-  run TestServer::App::TestController
+map '/v1/test/streaming' do
+  run TestServer::App::StreamingController
+end
+
+map '/v1/test/plain' do
+  run TestServer::App::PlainController
 end
 
 map TestServer::App::AssetsController.assets_prefix do

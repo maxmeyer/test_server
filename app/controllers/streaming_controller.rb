@@ -1,7 +1,7 @@
 # encoding: utf-8
 module TestServer
   module App
-    class TestController < ApplicationController
+    class StreamingController < ApplicationController
 
       helpers Sinatra::Streaming
       helpers Sinatra::Param
@@ -10,7 +10,7 @@ module TestServer
         mime_type :stream, 'text/stream'
       end
 
-      get '/stream/?:count?' do
+      get '/?:count?' do
         param :count, Integer, default: 10
 
         count = params[:count]

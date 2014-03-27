@@ -1,5 +1,7 @@
 # encoding: utf-8
-describe 'Fetch Test Data' do
+require 'spec_helper'
+
+describe 'Fetch Test Data via Streaming' do
 
   before :each do
     config = Class.new do
@@ -11,12 +13,12 @@ describe 'Fetch Test Data' do
     end.new
 
     TestServer.config = config
-    Capybara.app    = TestServer::App::TestController.new
+    Capybara.app    = TestServer::App::StreamingController.new
   end
 
-  it 'finds an existing proxy pac' do
-    visit('/stream/2')
-    expect(page).to have_content("data")
+  it 'downloads stream' do
+    visit('/2')
+    expect(page).to have_content('data')
   end
 
 end
