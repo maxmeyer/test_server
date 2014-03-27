@@ -69,9 +69,14 @@ namespace :package do
     template = File.read(File.expand_path('../share/archlinux/PKGBUILD.sh.erb', __FILE__))
     build_file = File.expand_path('../share/archlinux/PKGBUILD', __FILE__)
 
+    data = { 
+      sha: nil, 
+      version: version,
+    }
+
     Dir.chdir(archlinux_build_directory) do
       File.open(build_file, 'w') do |f|
-        f.write generator.run(template, { sha: nil })
+        f.write generator.run(template, data )
       end
 
       data = {
