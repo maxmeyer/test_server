@@ -16,6 +16,7 @@ module TestServer
         count = params[:count]
 
         content_type :stream
+        cache_control :no_cache
 
         stream do |out|
           out << "Data #{count} times repeated\n"

@@ -71,6 +71,15 @@ module TestServer
         def t(*args)
           I18n.t(*args)
         end
+
+        def configure_caching(option)
+          case option.to_s.underscore.to_sym
+          when :no_cache
+            cache_control :no_cache
+          else
+            cache_control :public, :must_revalidate, :max_age => 60
+          end
+        end
       end
     end
   end

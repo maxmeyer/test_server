@@ -23,6 +23,13 @@ describe 'Fetch plain data' do
   it 'downloads the data with multiplier' do
     visit('/10')
     expect(page.source.split(/\n/).size).to be 10
-    binding.pry
   end
+
+  it 'prevents caching' do
+    visit('/?cache_control=no-cache')
+    expect(page.response_headers).to be_key('Cache-Control')
+    expect(page.response_headers['Cache-Control']).to eq('no-cache')
+  end
+
+
 end

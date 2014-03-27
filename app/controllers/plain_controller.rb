@@ -7,9 +7,11 @@ module TestServer
 
       get '/?:count?' do
         param :count, Integer, default: 1
-        count = params[:count]
+        param :cache_control, String
 
-        "Plain Data\n" * count
+        configure_caching(params[:cache_control])
+
+        "Plain Data\n" * params[:count]
       end
     end
   end
