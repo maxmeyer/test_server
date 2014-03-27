@@ -53,6 +53,7 @@ package() {
   install -d ${pkgdir}$_run_dir
   install -d ${pkgdir}$_tmp_files_dir
   install -d ${pkgdir}$_sass_cache_dir
+  install -d ${pkgdir}$_defaults_dir
 
 
   msg "Starting download of gems. Don't get alert if the download takes a lot of time. Since rubygems 2.2.0 a new algorithm to resolve dependencies is used. Upgrade to > 2.2.0 via sudo /usr/bin/gem update --system to improve performance."
@@ -70,10 +71,10 @@ package() {
     SERVICE_USER=$_service_user \
     SERVICE_GROUP=$_service_group \
     DEFAULTS_FILE=$_service_environment_file \
-    filegen  ${pkgdir}${_share_dir}/systemd/${pkgname}.service.erb > ${pkgdir}/$_systemd_dir/${pkgname}.service
+    filegen  ${pkgdir}${_share_dir}/systemd/${pkgname}.service.erb > ${pkgdir}$_systemd_dir/${pkgname}.service
 
   VARIABLES="HOME=/home/$_service_user" \
-    filegen  ${pkgdir}${_share_dir}/archlinux/defaults.sh.erb > ${pkgdir}/${_service_environment_file}
+    filegen  ${pkgdir}${_share_dir}/archlinux/defaults.sh.erb > ${pkgdir}${_service_environment_file}
 
   chmod 644 ${pkgdir}${_tmp_files_file}
 
