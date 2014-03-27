@@ -26,7 +26,7 @@ describe 'Fetch plain data' do
     visit('/default/10')
 
     expect(page.status_code).to be 200
-    expect(page.source.split(/\n/).size).to be 10
+    expect(page.source.split(/\n/).size).to eq 10
   end
 
   it 'prevents caching' do
@@ -57,5 +57,15 @@ describe 'Fetch plain data' do
     expect(page.status_code).to be 200
     expect(page).to have_content(eicar.join)
   end
+
+  it 'supports long running requests' do
+    timeout(3) do
+      visit('/no-caching/sleep/2')
+    end
+
+    expect(page.status_code).to be 200
+    expect(page).to have_content('Plain Data')
+  end
+
 
 end

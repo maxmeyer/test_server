@@ -32,6 +32,15 @@ module TestServer
       get '/eicar/' do
         generate_eicar.join
       end
+
+      get '/no-caching/sleep/?:count?' do
+        cache_control :no_cache, :must_revalidate
+        param :count, Integer, default: 120
+
+        sleep params[:count]
+
+        generate_string(1)
+      end
     end
   end
 end
