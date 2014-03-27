@@ -1,6 +1,6 @@
 # Maintainer: Dennis Guennewig dg1|vrnetze.de
 pkgname=test_server
-pkgver=0.0.1
+pkgver=0.0.2
 pkgrel=1
 pkgdesc="test server for proxy testing"
 arch=(i686 x86_64)
@@ -29,7 +29,7 @@ package() {
   _run_dir=/run/${pkgname}
   _tmp_files_dir=/etc/tmpfiles.d
   _defaults_dir=/etc/default
-  _tmp_files_file=${_tmp_files_dir}/${pkgname}
+  _tmp_files_file=${_tmp_files_dir}/${pkgname}.conf
   _config_file=${_config_dir}/config.yaml
   _service_user=$pkgname
   _service_group=$pkgname
@@ -50,7 +50,7 @@ package() {
   install -d -m 770 ${pkgdir}$_data_dir
   install -d ${pkgdir}$_log_dir
   install -d ${pkgdir}$_config_dir
-  install -d ${pkgdir}$_run_dir
+  #install -d ${pkgdir}$_run_dir
   install -d ${pkgdir}$_tmp_files_dir
   install -d ${pkgdir}$_sass_cache_dir
   install -d ${pkgdir}$_defaults_dir
