@@ -18,30 +18,48 @@ describe 'Fetch plain data' do
   it 'downloads the data' do
     visit('/default/')
 
-    expect(page.status_code).to be 200
+    expect(page.status_code).to eq 200
     expect(page).to have_content('Plain Data')
   end
 
   it 'downloads the data with multiplier' do
     visit('/default/10')
 
-    expect(page.status_code).to be 200
+    expect(page.status_code).to eq 200
     expect(page.source.split(/\n/).size).to eq 10
   end
 
   it 'prevents caching' do
-    visit('/no-caching/')
+    visit('/default?no_cache')
 
-    expect(page.status_code).to be 200
+    expect(page.status_code).to eq 200
     expect(page.response_headers).to be_key('Cache-Control')
     expect(page.response_headers['Cache-Control']).to include('no-cache')
+  end
+
+  it 'requires re-validation' do
+    visit('/default?must_revalidate')
+
+    expect(page.status_code).to eq 200
+    expect(page.response_headers).to be_key('Cache-Control')
     expect(page.response_headers['Cache-Control']).to include('must-revalidate')
   end
 
-  it 'prevents caching' do
-    visit('/expires/500')
-    expect(page.status_code).to be 200
+  it 'sets max age' do
+    visit('/default?max_age=500')
+
+    expect(page.status_code).to eq 200
     expect(page.response_headers).to be_key('Cache-Control')
+    expect(page.response_headers['Cache-Control']).to include('max-age=500')
+  end
+
+  it 'sets everything' do
+    visit('/default?expires=500')
+
+    expect(page.status_code).to eq 200
+    expect(page.response_headers).to be_key('Cache-Control')
+    expect(page.response_headers['Cache-Control']).to include('no-cache')
+    expect(page.response_headers['Cache-Control']).to include('must-revalidate')
     expect(page.response_headers['Cache-Control']).to include('max-age=500')
   end
 
@@ -54,16 +72,16 @@ describe 'Fetch plain data' do
               '+', 'H', '*' ]
 
     visit('/eicar/')
-    expect(page.status_code).to be 200
+    expect(page.status_code).to eq 200
     expect(page).to have_content(eicar.join)
   end
 
   it 'supports long running requests' do
     timeout(3) do
-      visit('/no-caching/sleep/2')
+      visit('/sleep/2')
     end
 
-    expect(page.status_code).to be 200
+    expect(page.status_code).to eq 200
     expect(page).to have_content('Plain Data')
   end
 

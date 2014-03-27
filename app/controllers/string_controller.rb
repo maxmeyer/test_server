@@ -9,41 +9,33 @@ module TestServer
       get '/default/?:count?' do
         param :count, Integer, default: 1
 
-        generate_string(params[:count])
-      end
+        param :no_cache, String
+        param :must_revalidate, String
+        param :max_age, Integer
 
-      get '/no-caching/?:count?' do
-        param :count, Integer, default: 1
-
-        cache_control :no_cache, :must_revalidate
-
-        generate_string(params[:count])
-      end
-
-      get '/expires/?:timeout?' do
-        param :timeout, Integer, default: 500
-        param :count, Integer, default: 1
-
-        expires params[:timeout], :public, :must_revalidate
+        configure_caching(params)
 
         generate_string(params[:count])
       end
 
       get '/eicar/' do
+        param :no_cache, String
+        param :must_revalidate, String
+        param :max_age, Integer
+
+        configure_caching(params)
+
         generate_eicar.join
       end
 
       get '/sleep/?:count?' do
         param :count, Integer, default: 120
 
-        sleep params[:count]
+        param :no_cache, String
+        param :must_revalidate, String
+        param :max_age, Integer
 
-        generate_string(1)
-      end
-
-      get '/no-caching/sleep/?:count?' do
-        cache_control :no_cache, :must_revalidate
-        param :count, Integer, default: 120
+        configure_caching(params)
 
         sleep params[:count]
 

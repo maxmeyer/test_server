@@ -85,6 +85,23 @@ module TestServer
             '-', 'T', 'E', 'S', 'T', '-', 'F', 'I', 'L', 'E', '!', '$', 'H',
             '+', 'H', '*' ]
         end
+
+        def configure_caching(params)
+          options = []
+
+          if params.key? 'expires'
+            options << :must_revalidate
+            options << :no_cache
+            options << { max_age: params[:expires] }
+          else
+            options << :must_revalidate              if params.key? 'must_revalidate'
+            options << :no_cache                     if params.key? 'no_cache'
+            options << { max_age: params[:max_age] } if params.key? 'max_age'
+          end
+
+          cache_control(*options)
+        end
+
       end
     end
   end
