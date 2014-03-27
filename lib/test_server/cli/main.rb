@@ -10,6 +10,7 @@ module TestServer
       option :access_log, type: :string, desc: 'File to write access log to'
       option :listen, type: :string, desc: 'Listen for requests'
       option :environment, type: :string, desc: 'Rack environment for application'
+      option :worker_count, type: :numeric, desc: 'Count of workers'
       option :with, type: :string, default: 'puma', desc: 'Server used to serve proxy pac'
       def serve
         TestServer.config = TestServer::Config.new(options[:config_file]) if options[:config_file]
@@ -17,6 +18,7 @@ module TestServer
         TestServer.config.log_level = options[:log_level] if options[:log_level]
         TestServer.config.debug_mode = options[:debug_mode] if options[:debug_mode]
         TestServer.config.environment = options[:environment] if options[:environment]
+        TestServer.config.worker_count = options[:worker_count] if options[:worker_count]
         TestServer.config.listen = options[:listen] if options[:listen]
         TestServer.config.lock
 
@@ -38,6 +40,7 @@ module TestServer
         command = command_klass.new(
           listen: TestServer.config.listen,
           environment: TestServer.config.environment,
+          worker_count: TestServer.config.worker_count,
         )
 
         ENV['DEBUG']      = TestServer.config.debug_mode.to_s if TestServer.config.debug_mode

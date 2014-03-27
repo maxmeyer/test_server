@@ -95,6 +95,7 @@ module TestServer
     option :reload_config_signal, :USR1
     option :reload_storage_signal, :USR2
     option :sass_cache, ::File.expand_path(::File.join(process_environment.fetch('HOME'), '.local', 'share', 'test_server', 'cache'))
+    option :worker_count, 10
 
     private
 
