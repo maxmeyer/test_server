@@ -75,7 +75,8 @@ namespace :package do
       end
 
       data = {
-        sha: extract_sha
+        sha: extract_sha,
+        version: version,
       }
 
       File.open(build_file, 'w') do |f|
