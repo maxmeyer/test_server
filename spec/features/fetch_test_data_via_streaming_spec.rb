@@ -13,7 +13,7 @@ describe 'Fetch Test Data via Streaming' do
     end.new
 
     TestServer.config = config
-    Capybara.app    = TestServer::App::StreamingController.new
+    Capybara.app = TestServer::App::StreamingController.new
   end
 
   it 'downloads stream' do
@@ -21,6 +21,20 @@ describe 'Fetch Test Data via Streaming' do
 
     expect(page.status_code).to be 200
     expect(page).to have_content('data')
+  end
+
+  it 'supports base64 encoding' do
+    visit('/default/2?base64')
+
+    expect(page.status_code).to be 200
+    expect(Base64.decode64(page.source.split(/\n/).last)).to include 'data'
+  end
+
+  it 'supports gzip encoding' do
+    visit('/default/2?gzip')
+
+    expect(page.status_code).to be 200
+    expect(Base64.decode64(page.source.split(/\n/).last)).to include "\xC6\xC2\bODLT\x91\xCC \xC32\xC7tG \x85q\xDD\x11\xC8".force_encoding('ASCII-8bit')
   end
 
   it 'serves eicar test string to check if virus scanners find that string' do
@@ -36,5 +50,4 @@ describe 'Fetch Test Data via Streaming' do
     expect(page.status_code).to be 200
     expect(page).to have_content(eicar.join)
   end
-
 end

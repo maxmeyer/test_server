@@ -4,6 +4,10 @@ module TestServer
     class StreamingController < ApplicationController
       helpers Sinatra::Streaming
 
+      before do
+        param :base64, Boolean, default: false
+      end
+
       helpers do
         def stream_data(&block)
           content_type :stream
@@ -27,10 +31,10 @@ module TestServer
         count = params[:count]
 
         stream_data do |out|
-          out << "Data #{count} times repeated\n"
+          out << encode { "Data #{count} times repeated" }
 
           count.times do |n|
-            out << "#{n + 1}: data\n"
+            out << encode { "#{n + 1}: data" }
             sleep 1
           end
         end
@@ -39,7 +43,7 @@ module TestServer
       get '/eicar/' do
         stream_data do |out|
           generate_eicar.each do |c|
-            out << c
+            out << encode { c }
           end
         end
       end

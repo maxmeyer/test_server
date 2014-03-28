@@ -14,7 +14,7 @@ module TestServer
       use Rack::PostBodyContentTypeParser
 
       helpers Sinatra::Param
-      
+
       error do
         handler = ErrorHandler.find(StandardError)
 
@@ -64,44 +64,7 @@ module TestServer
 
       helpers do
         include Sprockets::Helpers
-
-        def h(text)
-          Rack::Utils.escape_html(text)
-        end
-
-        def t(*args)
-          I18n.t(*args)
-        end
-
-        def generate_string(count, string = "Plain Data\n")
-          string * count
-        end
-
-        def generate_eicar
-          [ 'X', '5', 'O', '!', 'P', '%', '@', 'A', 'P', '[', '4', "\\", 'P',
-            'Z', 'X', '5', '4', '(', 'P', '^', ')', '7', 'C', 'C', ')', '7',
-            '}', '$', 'E', 'I', 'C', 'A', 'R', '-', 'S', 'T', 'A', 'N', 'D',
-            'A', 'R', 'D', '-', 'A', 'N', 'T', 'I', 'V', 'I', 'R', 'U', 'S',
-            '-', 'T', 'E', 'S', 'T', '-', 'F', 'I', 'L', 'E', '!', '$', 'H',
-            '+', 'H', '*' ]
-        end
-
-        def configure_caching(params)
-          options = []
-
-          if params.key? 'expires'
-            options << :must_revalidate
-            options << :no_cache
-            options << { max_age: params[:expires] }
-          else
-            options << :must_revalidate              if params.key? 'must_revalidate'
-            options << :no_cache                     if params.key? 'no_cache'
-            options << { max_age: params[:max_age] } if params.key? 'max_age'
-          end
-
-          cache_control(*options)
-        end
-
+        include TestServer::WebHelper
       end
     end
   end

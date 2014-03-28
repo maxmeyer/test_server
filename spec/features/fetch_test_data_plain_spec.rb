@@ -85,5 +85,25 @@ describe 'Fetch plain data' do
     expect(page).to have_content('Plain Data')
   end
 
+  it 'supports random string' do
+    visit('/random/2')
+
+    expect(page.status_code).to eq 200
+    expect(page.source.size).to eq 2
+  end
+
+  it 'supports base64 encoding' do
+    visit('/default?base64')
+
+    expect(page.status_code).to eq 200
+    expect(Base64.decode64(page.source)).to include 'Plain Data'
+  end
+
+  it 'supports base64 stric encoding' do
+    visit('/default?base64_strict')
+
+    expect(page.status_code).to eq 200
+    expect(Base64.strict_decode64(page.source)).to include 'Plain Data'
+  end
 
 end
