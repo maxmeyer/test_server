@@ -3,7 +3,7 @@ module TestServer
   module App
     class StringController < ApplicationController
       get '/' do
-        redirect '/default/'
+        redirect to('/default/')
       end
 
       get '/default/?:count?' do

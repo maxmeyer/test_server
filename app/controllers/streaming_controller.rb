@@ -7,18 +7,18 @@ module TestServer
       helpers do
         def stream_data(&block)
           content_type :stream
-          cache_control :no_cache
+          cache_control :no_cache, :must_revalidate
 
           stream(&block)
         end
       end
 
       configure do
-        mime_type :stream, 'text/stream'
+        mime_type :stream, 'text/plain'
       end
 
       get '/' do
-        redirect '/default/'
+        redirect to('/default/')
       end
 
       get '/default/?:count?' do
