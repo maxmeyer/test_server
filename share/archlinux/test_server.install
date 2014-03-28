@@ -10,11 +10,11 @@ _cache_dir=/var/cache/${pkgname}
 _sass_cache_directory=$_cache_dir
 
 post_install() {
-  if getent group $_admin_group; then
+  if !getent group $_admin_group >/dev/null; then
     groupadd $_admin_group
   fi
 
-  if getent passwd $_service_user; then
+  if !getent passwd $_service_user >/dev/null; then
     useradd -m $_service_user
   fi
 
@@ -51,15 +51,15 @@ post_remove() {
   echo "Please remove the home directory of the service user ${_service_user} yourself."
   echo ""
 
-  if getent group $_admin_group; then
+  if !getent group $_admin_group >dev/null; then
     groupdel $_admin_group
   fi
 
-  if getent group $_service_group; then
+  if !getent group $_service_group >/dev/null; then
     groupdel $_service_group
   fi
 
-  if getent passwd $_service_user; then
+  if !getent passwd $_service_user >/dev/null; then
     userdel $_service_user
   fi
 }

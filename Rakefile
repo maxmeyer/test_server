@@ -5,15 +5,20 @@
 
 require 'filegen'
 require 'fedux_org/stdlib/rake'
-require 'test_server/version'
+require 'active_support/core_ext/string/inflections'
 require 'open3'
 
 def software
-  'test_server'
+  gemspec.name
+end
+
+def gemspec
+  eval File.read(Dir.glob(File.join(File.expand_path('../', __FILE__), '*.gemspec')).first)
 end
 
 def version
-  TestServer::VERSION
+  require "#{software}/version"
+  "#{software.camelcase}::VERSION".constantize
 end
 
 def root_directory
