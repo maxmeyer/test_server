@@ -1,0 +1,137 @@
+$icon-font-path: '/assets/bootstrap-sass/fonts/';
+$open-sans-path: '/assets/open-sans/fonts';
+
+@import 'bootstrap-sass/lib/bootstrap';
+@import 'open-sans/scss/open-sans';
+
+html, body {
+  font-family: 'Open Sans', 'sans-serif';
+  min-height: 100%;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 4rem;
+}
+
+.ts-page-footer {
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
+  z-index: -1;
+}
+
+.ts-page-header {
+  margin: 10px;
+}
+
+.ts-top-navigation {
+  @extend .navbar;
+  @extend .navbar-default;
+  margin-bottom: 7px;
+}
+
+.ts-bottom-navigation {
+  @extend .navbar;
+  @extend .navbar-default;
+
+  margin-top: 20px;
+  margin-bottom: 0px;
+  min-height: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 1rem;
+  color: #9e9e9e;
+}
+
+.ts-header  {
+  font-size: 1.2rem;
+  color: #505050;
+  text-align: left;
+  font-weight: bold;
+  width: auto;
+}
+
+.ts-container {
+}
+
+.ts-navigation {
+  @extend .nav;
+  @extend .nav-tabs;
+  width: 70%;
+  margin: 0px auto;
+}
+
+.ts-main-container {
+  @extend .text-center;
+  margin: 0px auto;
+}
+
+.ts-button-submit {
+  @extend .btn;
+  @extend .btn-primary;
+  margin-left: 20px;
+}
+
+.ts-button-reset {
+  @extend .btn;
+  @extend .btn-default;
+  margin-left: 10px;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: none;
+}
+
+a:focus {
+  text-decoration: none;
+}
+
+.ts-field-url {
+  @extend .form-control;
+  display: inline-block;
+}
+
+.ts-field-count {
+  @extend .form-control;
+  display: inline-block;
+}
+
+.ts-field-timeout {
+  @extend .form-control;
+  display: inline-block;
+}
+
+.ts-form-group {
+  @extend .form-group;
+}
+
+.ts-form {
+  width: 30%;
+  margin: 20px;
+}
+
+.ts-result-table {
+  @extend .table;
+  @extend .table-hover;
+  margin-top: 20px;
+  margin-left: 20px;
+  width: 50%;
+  display: none;
+}
+
+.ts-result-successfull-request {
+}
+
+.ts-result-failed-request {
+  color: red;
+}

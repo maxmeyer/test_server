@@ -1,0 +1,19 @@
+!!!
+%html
+  %head
+    %meta{ charset: 'utf-8'}
+    %link{ rel: 'stylesheet', href: stylesheet_path('application.css') }
+    %title= @title || t('views.application.title')
+  %body
+    .ts-page-header
+      %nav.ts-top-navigation
+        %ul.nav.navbar-nav
+          %li
+            %a{href: '/'}
+              = t('views.root.link')
+          %li.active
+            %a{href: '/v1/test/'}
+              = t('views.test.link')
+    .ts-container
+      = yield
+    %script{ type: 'text/javascript', src: javascript_path('application.js') }

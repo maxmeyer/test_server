@@ -42,6 +42,10 @@ map '/v1/test/string' do
   run TestServer::App::StringController
 end
 
+map '/v1/test/javascript' do
+  run TestServer::App::JavascriptController
+end
+
 map TestServer::App::AssetsController.assets_prefix do
   run TestServer::App::AssetsController.assets
 end

@@ -43,3 +43,23 @@ en:
   views:
     application:
       title: Test Server
+      buttons:
+        submit: 'Start'
+        reset: 'Reset'
+    root:
+      link: Home
+    test:
+      link: Tests
+    javascript:
+      xhr:
+        link: XHR
+        title: 'Javascript Tests'
+        fields: &fields
+          url: URL
+          count: Count
+          timeout: Timeout (ms)
+        result_table:
+          url: URL
+          runtime: Runtime
+          status: Status
+
