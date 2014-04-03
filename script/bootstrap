@@ -1,0 +1,63 @@
+#!/bin/sh
+
+function puts() {
+  echo -e $1 >&2
+}
+
+function install_package() {
+if which pacman > /dev/null; then
+  if [ -z "$(pacman -Ss "^$1\$" | grep installed)" ]; then
+    puts "Installing $1"
+    sudo pacman -S --noconfirm $1
+  fi
+else
+  puts "Please install $1 from your operating system repository."
+fi
+}
+
+function install_gem() {
+if which gem > /dev/null; then
+  if [ -z "$(gem list -l "^$1\$")" ]; then
+    puts "Installing $1"
+    gem install --no-ri --no-rdoc $1
+  fi
+else
+  puts "Please install $1 via rubygems."
+fi
+}
+
+function install_node() {
+if which npm > /dev/null; then
+  if [ -z "$(npm list -g $1 | grep bower)" ]; then
+    puts "Installing $1"
+    npm install -g $1 
+  fi
+else
+  puts "Please install $1 via npm"
+fi
+}
+
+function file_exist() {
+if [ -f $1 ]; then
+  puts "$2"
+  return 0
+else
+  puts "Warning file \"$1\" does not exist. Maybe this can cause problems during bootstrapping"
+  return 1
+fi
+}
+
+echo "Bootstrapping development environment for application.." >&2
+
+install_package ruby
+install_package nodejs
+install_package phantomjs
+
+install_gem bundler
+bundle install
+
+file_exist "$HOME/.npmrc" "I found a .npmrc. Please make sure your npm configuration works with global install for users. If not please add something like \"prefix = /home/user/.local/share/npm\" to your .bashrc/.zshrc + export PATH=/home/user/.local/share/npm/bin:\$PATH"
+
+install_node bower
+
+bower install

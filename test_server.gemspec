@@ -36,5 +36,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'pager'
   spec.add_runtime_dependency 'sinatra-param'
   spec.add_runtime_dependency 'sinatra-contrib'
+  spec.add_runtime_dependency 'sinatra-advanced-routes'
   spec.add_runtime_dependency 'thor'
 end

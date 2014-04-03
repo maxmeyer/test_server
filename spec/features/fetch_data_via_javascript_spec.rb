@@ -8,11 +8,9 @@ describe 'Fetch data via javascript', :js do
       visit '/xhr/string/'
 
       within '#form' do
-        fill_in 'url', :with => '§ASDF$$'
+        fill_in 'url', :with => 'http://localhost:4567/rspec/test'
       end
-
       click_button '#submit'
-      click_on('Search')
     end
 
   end

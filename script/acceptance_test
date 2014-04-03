@@ -1,0 +1,4 @@
+#!/bin/sh
+
+bundle exec cucumber
+bundle exec rspec spec/features

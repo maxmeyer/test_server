@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+require 'sinatra/base'
+
+class Webserver < Sinatra::Base
+  enable :protection
+
+  post '/rspec/:test' do
+    case params[:test]
+    when 'send'
+      return params[:data]
+    else
+      not_found
+    end
+  end
+
+  get '/rspec/:test' do
+    params[:test]
+  end
+end
+
+Webserver.run!
