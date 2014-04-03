@@ -2,22 +2,37 @@
   .ts-form-group
     %label{ for: :count}
       = t('views.javascript.xhr.fields.count')
-    %input#count.ts-field-count{ type: :text, name: :count, value: @count }
+    %input#count.ts-field-count{ type: :number, name: :count, value: @count }
   .ts-form-group
     %label{ for: :timeout}
       = t('views.javascript.xhr.fields.timeout')
-    %input#timeout.ts-field-timeout{ type: :text, name: :timeout, value: @timeout }
+    %input#timeout.ts-field-timeout{ type: :number, name: :timeout, value: @timeout }
   .ts-form-group
     %label{ for: :url}
       = t('views.javascript.xhr.fields.url')
-    %input#url.ts-field-url{ type: :text, name: :url, value: @url }
-  %button#submit.ts-button-submit{type: 'submit', value: t('views.application.buttons.submit')}
+    %input#url.ts-field-url{ type: :url, name: :url, value: @url }
+  %button#submit.ts-button-submit{type: 'submit', value: t('views.application.buttons.submit'), 'data-toggle' => 'modal', 'data-target' => '#notification'}
     = t('views.application.buttons.submit')
   %a#reset.ts-button-reset{href: '#'}
     = t('views.application.buttons.reset')
 
 %table#result.ts-result-table
   %th= t('views.javascript.xhr.result_table.url') 
+  %th= t('views.javascript.xhr.result_table.timeout') 
   %th= t('views.javascript.xhr.result_table.runtime') 
   %th= t('views.javascript.xhr.result_table.status') 
 
+.modal#notification{ role: 'dialog' , tabindex: '-1'}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.ts-button-close-headline{ type: 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true'} 
+          &times;
+        %h4 
+          = t('views.dialogs.notification.title')
+      .modal-body
+        %p.ts-text-centered 
+          = t('views.javascript.xhr.notification.text')
+      .modal-footer
+        %button.ts-button-close{ type: 'button', 'data-dismiss' => 'modal' }
+          = t('views.application.buttons.close')

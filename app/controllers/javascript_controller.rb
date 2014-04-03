@@ -13,7 +13,7 @@ module TestServer
       end
       get '/xhr/string' do
         param :count, Integer, default: 10
-        param :timeout, Integer, default: 10_000
+        param :timeout, Integer, default: 10
         param :url, String
 
         @count   = params[:count]

@@ -74,6 +74,15 @@ h1 {
   margin-left: 20px;
 }
 
+.ts-button-close-headline {
+  @extend .close;
+}
+
+.ts-button-close{
+  @extend .btn;
+  @extend .btn-default;
+}
+
 .ts-button-reset {
   @extend .btn;
   @extend .btn-default;
@@ -127,6 +136,10 @@ a:focus {
   margin-left: 20px;
   width: 50%;
   display: none;
+}
+
+.ts-text-centered {
+  @extend .text-center;
 }
 
 .ts-result-successfull-request {

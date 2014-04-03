@@ -46,6 +46,10 @@ en:
       buttons:
         submit: 'Start'
         reset: 'Reset'
+        close: 'Close'
+    dialogs:
+      notification:
+        title: Notification
     root:
       link: Home
     test:
@@ -57,9 +61,12 @@ en:
         fields: &fields
           url: URL
           count: Count
-          timeout: Timeout (ms)
+          timeout: Timeout (s)
         result_table:
           url: URL
-          runtime: Runtime
+          runtime: Runtime (ms)
+          timeout: Timeout (ms)
           status: Status
+        notification: 
+          text: You asked me to send out requests.
 

@@ -13,9 +13,10 @@ function escapeHTML(s) {
   return String(s).replace(/&(?!\w+;)/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function result(url, start_time, result) {
+function result(url, timeout, start_time, result) {
   var end_time = new Date().getTime();
   var run_time = end_time - start_time;
+
   if ( result == 'ok') {
     var result_klass = 'ts-result-successfull-request';
   } else {
@@ -23,12 +24,13 @@ function result(url, start_time, result) {
   }
 
   $('#result').toggle(true);
-  $('#result tr:last').after('<tr class="' + result_klass + '"><td>' + url + '</td><td>' + run_time + '</td><td>' + result + '</td></tr>');
+  $('#result tr:last').after('<tr class="ts-result-row ' + result_klass + '"><td>' + url + '</td><td>' + timeout + '</td><td>' + run_time + '</td><td>' + result + '</td></tr>');
 }
 
 $(document).ready(function(){
   $("#reset").click(function () {
     $('#form')[0].reset();
+    $('.ts-result-row').remove();
   });
 });
 
@@ -37,7 +39,7 @@ $(document).ready(function(){
     e.preventDefault();
 
     var url     = escapeHTML($('#url').val())
-    var timeout = escapeHTML($('#timeout').val())
+    var timeout = escapeHTML($('#timeout').val() * 1000)
     var count   = escapeHTML($('#count').val())
 
     for (var i = 0, limit = count ; i < limit; i++) {
@@ -49,13 +51,15 @@ $(document).ready(function(){
         timeout: timeout,
         cache: false, 
         success: function() {
-          result(url, start_time, 'ok');
+          result(url, timeout, start_time, 'ok');
         },
         error: function(){
-          result(url, start_time, 'fail');
+          result(url, timeout, start_time, 'fail');
         }
       });
     }
 
   });
 });
+
+$('#notification').modal('hide');
