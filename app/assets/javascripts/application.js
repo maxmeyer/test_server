@@ -1,14 +1,6 @@
 //= require jquery
 //= require bootstrap-sass/dist/js/bootstrap
 
-//$(document).ready(function(){
-//  $(".lp_show_fields").click(function(e){
-//    e.preventDefault()
-//    $(".lp_fields_close, .lp_fields_open").toggle();
-//    $(".lp_button_show_fields_close, .lp_button_show_fields_open").toggle();
-//  });
-//});
-
 function escapeHTML(s) {
   return String(s).replace(/&(?!\w+;)/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
@@ -32,6 +24,7 @@ $(document).ready(function(){
   $("#reset").click(function () {
     $('#form')[0].reset();
     $('.ts-result-row').remove();
+    $('#result').toggle(false);
   });
 });
 
@@ -51,8 +44,9 @@ function repeat_requests(url, count, timeout) {
   var repeat  = $('#repeat').is(":checked");
   var requests = [];
 
-  var callback = function() {
+  var success_callback = function() {
     console.log("done");
+    $('#request-spinner').toggle(false);
 
     if (repeat == true) {
       console.log("repeating");
@@ -60,11 +54,17 @@ function repeat_requests(url, count, timeout) {
     }
   };
 
+  var failure_callback = function() {
+    $('#request-spinner').toggle(false);
+  };
+
+  $('#request-spinner').toggle(true);
+
   for(i = 0; i < count; i++) {
     requests.push(sendAjax(url, timeout));
   }
 
-  $.when.apply(undefined, requests).then(function(results){callback()});
+  $.when.apply(undefined, requests).then(function(results){success_callback()}, function(results){failure_callback()});
 }
 
 function sendAjax(url, timeout)  {
@@ -84,21 +84,3 @@ function sendAjax(url, timeout)  {
       }
   );
 }
-
-$('#notification').modal('hide');
-
-//var mySpinner = {
-//  hide : function () {
-//    jQuery('#request-spinner').hide();
-//  }
-//};
-//
-//$.when(
-//  $.ajax("/first"),
-//  $.ajax("/second"),
-//  "any-other-javascript-object")
-//.then(
-//  mySpinner.hide,  // yourSuccessFunction
-//  mySpinner.hide); // yourFailureFunction
-//});
-//

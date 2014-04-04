@@ -68,6 +68,6 @@ en:
           runtime: Runtime (ms)
           timeout: Timeout (ms)
           status: Status
-        notification: 
-          text: You asked me to send out requests.
+        spinner: 
+          text: Requests were sent. Waiting for results.
 

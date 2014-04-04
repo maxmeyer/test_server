@@ -19,6 +19,9 @@
     = t('views.application.buttons.submit')
   %a#reset.ts-button-reset{href: '#', name: 'reset'}
     = t('views.application.buttons.reset')
+  %span.ts-inline#request-spinner
+    %img{ src: '/assets/ajax-loader.gif', alt: t('views.javascript.xhr.spinner.text') }
+    = t('views.javascript.xhr.spinner.text')
 
 %table#result.ts-result-table
   %tr#result_table_header
@@ -26,19 +29,3 @@
     %th= t('views.javascript.xhr.result_table.timeout') 
     %th= t('views.javascript.xhr.result_table.runtime') 
     %th= t('views.javascript.xhr.result_table.status') 
-
-.modal#notification{ role: 'dialog' , tabindex: '-1'}
-  .modal-dialog
-    .modal-content
-      .modal-header
-        %button.ts-button-close-headline{ type: 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true'} 
-          &times;
-        %h4 
-          = t('views.dialogs.notification.title')
-      .modal-body
-        %p.ts-text-centered 
-          = t('views.javascript.xhr.notification.text')
-          %img#request-spinner{ src: '/assets/ajax-loader.gif', alt: 'Requests are still running' }
-      .modal-footer
-        %button#close.ts-button-close{ type: 'button', 'data-dismiss' => 'modal', name: 'close' }
-          = t('views.application.buttons.close')
