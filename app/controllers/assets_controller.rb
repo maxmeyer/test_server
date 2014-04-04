@@ -31,6 +31,7 @@ module TestServer
       configure :production do
         use Rack::CommonLogger, TestServer::AccessLogger.new(TestServer.config.access_log)
         set :raise_errors, false
+        set :digest_assets, true
 
         assets.js_compressor  = :uglify
         assets.css_compressor = :scss
