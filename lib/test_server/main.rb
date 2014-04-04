@@ -23,6 +23,7 @@ module TestServer
       I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
       I18n.load_path = Dir[::File.join(TestServer.root_path, 'lib', 'test_server', 'locales', '*.yml')]
       I18n.backend.load_translations
+      I18n.available_locales = [:en]
       I18n.enforce_available_locales = true
     end
   end
