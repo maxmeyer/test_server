@@ -2,12 +2,12 @@
 module TestServer
   module App
     class JavascriptController < ApplicationController
-      use Rack::Cors do 
-        allow do
-          origins '*'
-          resource '*', :headers => :any, :methods => [:get, :post]
-        end
-      end
+      #use Rack::Cors do 
+      #  allow do
+      #    origins '*'
+      #    resource '*', :headers => :any, :methods => [:get, :post]
+      #  end
+      #end
 
       before do
         param :no_cache, Boolean, default: false
