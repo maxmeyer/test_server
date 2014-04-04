@@ -54,6 +54,10 @@ function repeat_requests(url, count, timeout) {
 
   var failure_callback = function() {
     $('#request-spinner').toggle(false);
+
+    if (repeat == true) {
+      setTimeout(repeat_requests(url, count, timeout), 1000);
+    }
   };
 
   $('#request-spinner').toggle(true);
