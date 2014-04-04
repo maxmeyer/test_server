@@ -1,5 +1,6 @@
 //= require jquery
 //= require bootstrap-sass/dist/js/bootstrap
+//= require jquery-validation
 
 function escapeHTML(s) {
   return String(s).replace(/&(?!\w+;)/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -45,11 +46,9 @@ function repeat_requests(url, count, timeout) {
   var requests = [];
 
   var success_callback = function() {
-    console.log("done");
     $('#request-spinner').toggle(false);
 
     if (repeat == true) {
-      console.log("repeating");
       setTimeout(repeat_requests(url, count, timeout), 1000);
     }
   };

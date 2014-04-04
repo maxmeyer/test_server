@@ -10,7 +10,7 @@
   .ts-form-group
     %label{ for: :url}
       = t('views.javascript.xhr.fields.url')
-    %input#url.ts-field-url{ type: :url, name: :url, value: @url }
+    %input#url.ts-field-url{ type: :url, name: :url, value: @url, placeholder: 'http://www.example.org' }
     .ts-field-repeat
       %label
         %input#repeat{ type: :checkbox, value: @repeat }
