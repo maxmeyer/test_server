@@ -70,5 +70,5 @@ en:
           timeout: Timeout (ms)
           status: Status
         spinner: 
-          text: Requests were sent. Waiting for results.
+          text: Waiting for results...
 
