@@ -1,6 +1,5 @@
 //= require jquery
 //= require bootstrap-sass/dist/js/bootstrap
-//= require jquery-validation
 
 function escapeHTML(s) {
   return String(s).replace(/&(?!\w+;)/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');

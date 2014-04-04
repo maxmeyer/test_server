@@ -36,13 +36,14 @@ describe 'Fetch data via javascript', :js do
     end
   end
 
-  context '/xhr/string/' do
+  context '/xhr/url/' do
     it 'submits requests to url' do
-      url = 'http://127.0.0.1:4567/rspec/test'
-      visit '/xhr/string/'
+      url = '/v1/test/javascript/xhr/url'
+      visit '/xhr/url/'
 
       within '#form' do
         fill_in 'url', :with => url
+        fill_in 'count', :with => 1
       end
 
 
@@ -50,7 +51,7 @@ describe 'Fetch data via javascript', :js do
 
       first '.ts-result-row'
 
-      expect(page).to have_content('ok')
+      expect(page).to have_content(url)
     end
 
   end

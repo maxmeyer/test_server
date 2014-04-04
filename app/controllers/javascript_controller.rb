@@ -18,7 +18,7 @@ module TestServer
         configure_caching(params)
       end
 
-      get '/xhr/url?' do
+      get '/xhr/url/?' do
         param :count, Integer, default: 10
         param :timeout, Integer, default: 10
         param :url, String
