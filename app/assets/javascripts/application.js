@@ -21,6 +21,15 @@ function result(url, timeout, start_time, result) {
 }
 
 $(document).ready(function(){
+  $("#clone").click(function () {
+
+    var popup = window.open(window.location.pathname + '?' + $('form').serialize());
+    popup.blur();
+    window.focus();
+  });
+});
+
+$(document).ready(function(){
   $("#reset").click(function () {
     $('#form')[0].reset();
     $('.ts-result-row').remove();

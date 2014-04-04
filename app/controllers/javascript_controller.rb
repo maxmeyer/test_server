@@ -22,12 +22,12 @@ module TestServer
         param :count, Integer, default: 10
         param :timeout, Integer, default: 10
         param :url, String
-        param :repeat, Boolean, default: false
+        param :repeat, String, default: 'false'
 
         @count   = params[:count]
         @url     = params[:url]
         @timeout = params[:timeout]
-        @repeat  = params[:repeat]
+        @repeat  = %w{ on yes true t }.include?(params[:repeat])
 
         haml :'xhr/show', layout: :application
       end

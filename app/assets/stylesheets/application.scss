@@ -71,7 +71,6 @@ h1 {
 .ts-button-submit {
   @extend .btn;
   @extend .btn-primary;
-  margin-left: 20px;
 }
 
 .ts-button-close-headline {
@@ -81,6 +80,12 @@ h1 {
 .ts-button-close{
   @extend .btn;
   @extend .btn-default;
+}
+
+.ts-button-clone {
+  @extend .btn;
+  @extend .btn-default;
+  margin-left: 10px;
 }
 
 .ts-button-reset {

@@ -47,6 +47,7 @@ en:
         submit: 'Start'
         reset: 'Reset'
         close: 'Close'
+        clone: 'Clone'
     dialogs:
       notification:
         title: Notification

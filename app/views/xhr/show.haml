@@ -13,12 +13,18 @@
     %input#url.ts-field-url{ type: :url, name: :url, value: @url, placeholder: 'http://www.example.org' }
     .ts-field-repeat
       %label
-        %input#repeat{ type: :checkbox, value: @repeat }
-          = t('views.javascript.xhr.fields.repeat')
+        - if @repeat
+          %input#repeat{ type: :checkbox, checked: 'checked', value: true, name: :repeat }
+            = t('views.javascript.xhr.fields.repeat')
+        - else
+          %input#repeat{ type: :checkbox, name: :repeat }
+            = t('views.javascript.xhr.fields.repeat')
   %button#submit.ts-button-submit{type: 'submit', name: 'submit', value: t('views.application.buttons.submit'), 'data-toggle' => 'modal', 'data-target' => '#notification'}
     = t('views.application.buttons.submit')
   %a#reset.ts-button-reset{href: '#', name: 'reset'}
     = t('views.application.buttons.reset')
+  %a#clone.ts-button-clone{href: '#', name: 'clone'}
+    = t('views.application.buttons.clone')
   %span.ts-inline#request-spinner
     %img{ src: '/assets/ajax-loader.gif', alt: t('views.javascript.xhr.spinner.text') }
     = t('views.javascript.xhr.spinner.text')
