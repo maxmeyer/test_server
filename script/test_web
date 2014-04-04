@@ -3,7 +3,7 @@
 require 'sinatra/base'
 
 class Webserver < Sinatra::Base
-  enable :protection
+  set :logging, :true
 
   post '/rspec/:test' do
     case params[:test]
@@ -19,4 +19,5 @@ class Webserver < Sinatra::Base
   end
 end
 
+Webserver.set :bind,'127.0.0.1'
 Webserver.run!

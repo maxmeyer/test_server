@@ -1,3 +1,7 @@
 #!/bin/sh
 
+bundle exec script/test_web &
+
 bundle exec rspec
+
+pkill -P $$   

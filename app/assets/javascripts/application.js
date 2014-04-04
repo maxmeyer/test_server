@@ -24,7 +24,8 @@ function result(url, timeout, start_time, result) {
   }
 
   $('#result').toggle(true);
-  $('#result tr:last').after('<tr class="ts-result-row ' + result_klass + '"><td>' + url + '</td><td>' + timeout + '</td><td>' + run_time + '</td><td>' + result + '</td></tr>');
+  $('#result_table_header').after('<tr class="ts-result-row ' + result_klass + '"><td>' + url + '</td><td>' + timeout + '</td><td>' + run_time + '</td><td>' + result + '</td></tr>');
+  
 }
 
 $(document).ready(function(){
@@ -38,28 +39,66 @@ $(document).ready(function(){
   $("#submit").click(function (e) {
     e.preventDefault();
 
-    var url     = escapeHTML($('#url').val())
-    var timeout = escapeHTML($('#timeout').val() * 1000)
-    var count   = escapeHTML($('#count').val())
+    var url     = escapeHTML($('#url').val());
+    var timeout = escapeHTML($('#timeout').val() * 1000);
+    var count   = escapeHTML($('#count').val());
 
-    for (var i = 0, limit = count ; i < limit; i++) {
-
-      var start_time = new Date().getTime();
-
-      $.ajax({
-        url: url,
-        timeout: timeout,
-        cache: false, 
-        success: function() {
-          result(url, timeout, start_time, 'ok');
-        },
-        error: function(){
-          result(url, timeout, start_time, 'fail');
-        }
-      });
-    }
-
+    repeat_requests(url, count, timeout);
   });
 });
 
+function repeat_requests(url, count, timeout) {
+  var repeat  = $('#repeat').is(":checked");
+  var requests = [];
+
+  var callback = function() {
+    console.log("done");
+
+    if (repeat == true) {
+      console.log("repeating");
+      setTimeout(repeat_requests(url, count, timeout), 1000);
+    }
+  };
+
+  for(i = 0; i < count; i++) {
+    requests.push(sendAjax(url, timeout));
+  }
+
+  $.when.apply(undefined, requests).then(function(results){callback()});
+}
+
+function sendAjax(url, timeout)  {
+  var start_time = new Date().getTime();
+
+  return $.ajax(
+      {
+        url: url,
+         timeout: timeout,
+         cache: false, 
+         success: function() {
+           result(url, timeout, start_time, 'ok');
+         },
+         error: function(){
+           result(url, timeout, start_time, 'fail');
+         }
+      }
+  );
+}
+
 $('#notification').modal('hide');
+
+//var mySpinner = {
+//  hide : function () {
+//    jQuery('#request-spinner').hide();
+//  }
+//};
+//
+//$.when(
+//  $.ajax("/first"),
+//  $.ajax("/second"),
+//  "any-other-javascript-object")
+//.then(
+//  mySpinner.hide,  // yourSuccessFunction
+//  mySpinner.hide); // yourFailureFunction
+//});
+//

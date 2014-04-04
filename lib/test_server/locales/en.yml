@@ -62,6 +62,7 @@ en:
           url: URL
           count: Count
           timeout: Timeout (s)
+          repeat: Repeat Requests
         result_table:
           url: URL
           runtime: Runtime (ms)

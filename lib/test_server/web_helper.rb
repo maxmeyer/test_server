@@ -1,6 +1,14 @@
 # encoding: utf-8
 module TestServer
   module WebHelper
+    def base_url
+      mutex = Mutex.new
+
+      mutex.synchronize do
+        @base_url ||= "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
+      end
+    end
+
     def h(text)
       Rack::Utils.escape_html(text)
     end

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-script/test_web &
+bundle exec script/test_web &
 
 bundle exec rake test:coveralls
 

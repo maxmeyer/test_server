@@ -8,9 +8,9 @@ end
 
 RSpec.configure do |c|
   c.include TestServer::SpecHelper::Capybara
-  c.beforc(:all) do
-    Capybara.default_engine = :rack_test
-    Capybara.javascript_engine = :poltergeist
+  c.before(:all) do
+    Capybara.default_driver    = :rack_test
+    Capybara.javascript_driver = :poltergeist
   end
 end
 

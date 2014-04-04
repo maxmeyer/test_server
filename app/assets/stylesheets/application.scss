@@ -110,6 +110,10 @@ a:focus {
   display: inline-block;
 }
 
+.ts-field-repeat {
+  @extend .checkbox;
+}
+
 .ts-field-count {
   @extend .form-control;
   display: inline-block;
@@ -147,4 +151,8 @@ a:focus {
 
 .ts-result-failed-request {
   color: red;
+}
+
+#request-spinner {
+  margin: 20px;
 }

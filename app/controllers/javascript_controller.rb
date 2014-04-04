@@ -2,6 +2,12 @@
 module TestServer
   module App
     class JavascriptController < ApplicationController
+      use Rack::Cors do 
+        allow do
+          origins '*'
+          resource '*', :headers => :any, :methods => [:get, :post]
+        end
+      end
 
       before do
         param :no_cache, Boolean, default: false
@@ -11,18 +17,17 @@ module TestServer
 
         configure_caching(params)
       end
-      get '/xhr/string' do
+
+      get '/xhr/url?' do
         param :count, Integer, default: 10
         param :timeout, Integer, default: 10
         param :url, String
+        param :repeat, Boolean, default: false
 
         @count   = params[:count]
         @url     = params[:url]
         @timeout = params[:timeout]
-
-        #@data = encode do
-        #  generate_string(params[:count])
-        #end
+        @repeat  = params[:repeat]
 
         haml :'xhr/show', layout: :application
       end
