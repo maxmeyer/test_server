@@ -68,7 +68,7 @@ end
 namespace :package do
   desc 'build arch linux package'
   task :archlinux => [gem_file, archlinux_build_directory] do
-    FileUtils.mv ::File.join(pkg_directory, "#{software}-#{version}.gem"), archlinux_build_directory
+    #FileUtils.mv ::File.join(pkg_directory, "#{software}-#{version}.gem"), archlinux_build_directory
 
     generator = Filegen::Rubygen.new
     template = File.read(File.expand_path('../share/archlinux/PKGBUILD.sh.erb', __FILE__))
