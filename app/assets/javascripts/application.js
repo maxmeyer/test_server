@@ -23,7 +23,7 @@ function result(url, timeout, start_time, result) {
 $(document).ready(function(){
   $("#clone").click(function () {
 
-    var popup = window.open(window.location.pathname + '?' + $('form').serialize());
+    var popup = window.open(window.location.pathname + '?' + $('form').serialize(), 'Test Server');
     popup.blur();
     window.focus();
   });
