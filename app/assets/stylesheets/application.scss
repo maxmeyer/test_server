@@ -68,9 +68,15 @@ h1 {
   margin: 0px auto;
 }
 
-.ts-button-submit {
+.ts-button-start {
   @extend .btn;
   @extend .btn-primary;
+}
+
+.ts-button-stop {
+  @extend .btn;
+  @extend .btn-default;
+  margin-left: 10px;
 }
 
 .ts-button-close-headline {

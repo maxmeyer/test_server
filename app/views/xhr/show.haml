@@ -11,16 +11,19 @@
     %label{ for: :url}
       = t('views.javascript.xhr.fields.url')
     %input#url.ts-field-url{ type: :url, name: :url, value: @url, placeholder: 'http://www.example.org' }
+    %input#hidden_repeat{ type: :hidden, name: :hidden_repeat }
     .ts-field-repeat
       %label
         - if @repeat
-          %input#repeat{ type: :checkbox, checked: 'checked', value: true, name: :repeat }
+          %input#repeat{ type: :checkbox, checked: 'checked', value: 'on', name: :repeat }
             = t('views.javascript.xhr.fields.repeat')
         - else
           %input#repeat{ type: :checkbox, name: :repeat }
             = t('views.javascript.xhr.fields.repeat')
-  %button#submit.ts-button-submit{type: 'submit', name: 'submit', value: t('views.application.buttons.submit'), 'data-toggle' => 'modal', 'data-target' => '#notification'}
-    = t('views.application.buttons.submit')
+  %button#start.ts-button-start{type: 'submit', name: 'start', value: t('views.application.buttons.start') }
+    = t('views.application.buttons.start')
+  %button#stop.ts-button-stop{type: 'submit', name: 'stop', value: t('views.application.buttons.stop') }
+    = t('views.application.buttons.stop')
   %a#reset.ts-button-reset{href: '#', name: 'reset'}
     = t('views.application.buttons.reset')
   %a#clone.ts-button-clone{href: '#', name: 'clone'}
