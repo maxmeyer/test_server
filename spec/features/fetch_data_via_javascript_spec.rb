@@ -67,7 +67,7 @@ describe 'Fetch data via javascript', :js do
 
       click_link('clone')
 
-      within_window 'Test Server' do
+      within_window '' do
         expect(find('#url').value).to eq url
         expect(find('#count').value).to eq '1'
         expect(find('#timeout').value).to eq '100'
