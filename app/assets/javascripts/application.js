@@ -23,6 +23,8 @@ function result(url, timeout, start_time, result) {
 $(document).ready(function(){
   $("#clone").click(function () {
 
+    set_repeat();
+
     var open_time = new Date().getTime();
     window.open(window.location.pathname + '?' + $('form').serialize(), '_blank');
   });
@@ -36,27 +38,44 @@ $(document).ready(function(){
   });
 });
 
+function set_repeat() {
+  var repeat  = $('#repeat').is(":checked");
+
+  if (repeat == true) {
+    $('#hidden_repeat').val('true');
+  } else {
+    $('#hidden_repeat').val('false');
+  }
+}
+
 $(document).ready(function(){
-  $("#submit").click(function (e) {
+  $("#stop").click(function (e) {
     e.preventDefault();
-
-    var url     = escapeHTML($('#url').val());
-    var timeout = escapeHTML($('#timeout').val() * 1000);
-    var count   = escapeHTML($('#count').val());
-
-    repeat_requests(url, count, timeout);
+    $('#hidden_repeat').val('false');
   });
 });
 
-function repeat_requests(url, count, timeout) {
-  var repeat  = $('#repeat').is(":checked");
+$(document).ready(function(){
+  $("#start").click(function (e) {
+    e.preventDefault();
+    set_repeat();
+    repeat_requests();
+  });
+});
+
+function repeat_requests() {
+  var url     = escapeHTML($('#url').val());
+  var timeout = escapeHTML($('#timeout').val() * 1000);
+  var count   = escapeHTML($('#count').val());
+  var repeat  = escapeHTML($('#hidden_repeat').val());
+
   var requests = [];
 
   var success_callback = function() {
     $('#request-spinner').toggle(false);
 
-    if (repeat == true) {
-      setTimeout(repeat_requests(url, count, timeout), 1000);
+    if (repeat == 'true') {
+      setTimeout(repeat_requests(), 1000);
     }
   };
 

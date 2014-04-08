@@ -44,7 +44,8 @@ en:
     application:
       title: Test Server
       buttons:
-        submit: 'Start'
+        start: 'Start'
+        stop: 'Stop'
         reset: 'Reset'
         close: 'Close'
         clone: 'Clone'
