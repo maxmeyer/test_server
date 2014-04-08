@@ -29,8 +29,7 @@ module TestServer
         @timeout = params[:timeout]
         @repeat  = %w{ on yes true t }.include?(params[:repeat])
 
-        binding.pry
-        render :haml, 'xhr/show', layout: :application
+        render 'xhr/show', layout: :application
       end
     end
   end
