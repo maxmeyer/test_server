@@ -23,9 +23,8 @@ function result(url, timeout, start_time, result) {
 $(document).ready(function(){
   $("#clone").click(function () {
 
-    var popup = window.open(window.location.pathname + '?' + $('form').serialize(), 'Test Server');
-    popup.blur();
-    window.focus();
+    var open_time = new Date().getTime();
+    window.open(window.location.pathname + '?' + $('form').serialize(), '_blank');
   });
 });
 
