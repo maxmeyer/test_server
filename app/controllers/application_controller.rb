@@ -5,8 +5,10 @@ module TestServer
       set :root, ::File.expand_path('../../', __FILE__)
       set :haml, :format => :html5
 
+      enable :protect_from_csrf
       enable :protection
       enable :session
+      enable :report_csrf_failure
 
       register Padrino::Helpers
       register Padrino::Routing

@@ -57,6 +57,7 @@ describe 'Fetch data via javascript', :js do
     it 'supports opening a new page based on given values' do
       url = '/v1/test/javascript/xhr/url'
       visit '/xhr/url/'
+      binding.pry
 
       within '#form' do
         fill_in 'url', :with => url
@@ -74,6 +75,5 @@ describe 'Fetch data via javascript', :js do
         expect(find('#repeat').checked?).to be true
       end
     end
-
   end
 end
