@@ -39,4 +39,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'sinatra-advanced-routes'
   spec.add_runtime_dependency 'rack-cors'
   spec.add_runtime_dependency 'thor'
+  spec.add_runtime_dependency 'padrino'
 end

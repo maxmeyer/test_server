@@ -23,7 +23,7 @@ describe 'Fetch plain data' do
   end
 
   it 'downloads the data with multiplier' do
-    visit('/default/10')
+    visit('/default?count=10')
 
     expect(page.status_code).to eq 200
     expect(page.source.split(/\n/).size).to eq 10
@@ -78,7 +78,7 @@ describe 'Fetch plain data' do
 
   it 'supports long running requests' do
     timeout(3) do
-      visit('/sleep/2')
+      visit('/sleep?count=2')
     end
 
     expect(page.status_code).to eq 200
@@ -86,7 +86,7 @@ describe 'Fetch plain data' do
   end
 
   it 'supports random string' do
-    visit('/random/2')
+    visit('/random?count=2')
 
     expect(page.status_code).to eq 200
     expect(page.source.size).to eq 2

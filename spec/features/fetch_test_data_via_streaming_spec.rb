@@ -17,21 +17,21 @@ describe 'Fetch Test Data via Streaming' do
   end
 
   it 'downloads stream' do
-    visit('/default/2')
+    visit('/default?count=2')
 
     expect(page.status_code).to be 200
     expect(page).to have_content('data')
   end
 
   it 'supports base64 encoding' do
-    visit('/default/2?base64')
+    visit('/default?count=2&base64')
 
     expect(page.status_code).to be 200
     expect(Base64.decode64(page.source.split(/\n/).last)).to include 'data'
   end
 
   it 'supports gzip encoding' do
-    visit('/default/2?gzip')
+    visit('/default?count=2&gzip')
 
     expect(page.status_code).to be 200
     expect(Base64.decode64(page.source.split(/\n/).last)).to include "\xC6\xC2\bODLT\x91\xCC \xC32\xC7tG \x85q\xDD\x11\xC8".force_encoding('ASCII-8bit')

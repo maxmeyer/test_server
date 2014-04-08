@@ -8,6 +8,9 @@ module TestServer
       enable :protection
       enable :session
 
+      register Padrino::Helpers
+      register Padrino::Routing
+
       use Rack::Deflater
       use Rack::Locale
       use Rack::NestedParams

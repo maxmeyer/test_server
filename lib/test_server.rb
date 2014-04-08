@@ -19,6 +19,7 @@ require 'thor'
 require 'base64'
 require 'zlib'
 require 'digest/sha1'
+require 'padrino'
 
 require 'active_support/core_ext/kernel/reporting'
 require 'active_support/core_ext/object/blank'
