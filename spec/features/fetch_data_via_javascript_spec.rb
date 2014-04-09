@@ -47,7 +47,7 @@ describe 'Fetch data via javascript', :js do
       end
 
 
-      click_button('submit')
+      click_button('start')
 
       first '.ts-result-row'
 
