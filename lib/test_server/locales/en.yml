@@ -63,7 +63,7 @@ en:
         fields: &fields
           url: URL
           count: Count
-          timeout: Timeout (s)
+          timeout: Timeout (ms)
           repeat: Repeat Requests
         result_table:
           url: URL

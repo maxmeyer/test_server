@@ -65,7 +65,7 @@ $(document).ready(function(){
 
 function repeat_requests() {
   var url     = escapeHTML($('#url').val());
-  var timeout = escapeHTML($('#timeout').val() * 1000);
+  var timeout = escapeHTML($('#timeout').val());
   var count   = escapeHTML($('#count').val());
   var repeat  = escapeHTML($('#hidden_repeat').val());
 
@@ -75,15 +75,15 @@ function repeat_requests() {
     $('#request-spinner').toggle(false);
 
     if (repeat == 'true') {
-      setTimeout(repeat_requests(), 1000);
+      setTimeout(repeat_requests(), 2000);
     }
   };
 
   var failure_callback = function() {
     $('#request-spinner').toggle(false);
 
-    if (repeat == true) {
-      setTimeout(repeat_requests(url, count, timeout), 1000);
+    if (repeat == 'true') {
+      setTimeout(repeat_requests(), 2000);
     }
   };
 

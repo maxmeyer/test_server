@@ -20,7 +20,7 @@ module TestServer
 
       get :url, map: '/xhr/url' do
         param :count, Integer, default: 10
-        param :timeout, Integer, default: 10
+        param :timeout, Integer, default: 1_000
         param :url, String
         param :repeat, String, default: 'false'
 
