@@ -12,11 +12,11 @@ module TestServer
         configure_caching(params)
       end
 
-      get '/' do
+      get :index, map: '/' do
         redirect to('/default/')
       end
 
-      get '/default/?:count?' do
+      get :string, map: '/default' do
         param :count, Integer, default: 1
 
         encode do
@@ -24,13 +24,13 @@ module TestServer
         end
       end
 
-      get '/eicar/' do
+      get :eicar, map: '/eicar' do
         encode do
           generate_eicar.join
         end
       end
 
-      get '/sleep/?:count?' do
+      get :sleep, map: '/sleep' do
         param :count, Integer, default: 120
         sleep params[:count]
 
@@ -39,7 +39,7 @@ module TestServer
         end
       end
 
-      get '/random/?:count?' do
+      get :random, map: '/random' do
         param :count, Integer, default: 10
 
         encode do

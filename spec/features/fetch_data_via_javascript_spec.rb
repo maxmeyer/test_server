@@ -74,6 +74,5 @@ describe 'Fetch data via javascript', :js do
         expect(find('#repeat').checked?).to be true
       end
     end
-
   end
 end

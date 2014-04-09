@@ -21,11 +21,11 @@ module TestServer
         mime_type :stream, 'text/plain'
       end
 
-      get '/' do
+      get :index, map: '/' do
         redirect to('/default/')
       end
 
-      get '/default/?:count?' do
+      get :string, map: '/default' do
         param :count, Integer, default: 10
 
         count = params[:count]
@@ -40,7 +40,7 @@ module TestServer
         end
       end
 
-      get '/eicar/' do
+      get :eicar, map: '/eicar' do
         stream_data do |out|
           generate_eicar.each do |c|
             out << encode { c }

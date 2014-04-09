@@ -18,7 +18,7 @@ module TestServer
         configure_caching(params)
       end
 
-      get '/xhr/url/?' do
+      get :url, map: '/xhr/url' do
         param :count, Integer, default: 10
         param :timeout, Integer, default: 10
         param :url, String
@@ -29,7 +29,7 @@ module TestServer
         @timeout = params[:timeout]
         @repeat  = %w{ on yes true t }.include?(params[:repeat])
 
-        haml :'xhr/show', layout: :application
+        render 'xhr/show', layout: :application
       end
     end
   end
