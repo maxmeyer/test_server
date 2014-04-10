@@ -1,19 +1,22 @@
 Rails.application.routes.draw do
-  match '(errors)/:exception', to: 'errors#show', constraints: {exception: /[a-z_]+/}, via: :all
 
-  resource 'dashboard', only: [:show], format: false
+  scope module: 'test_server' do
+    match '(errors)/:exception', to: 'errors#show', constraints: {exception: /[a-z_]+/}, via: :all
 
-  get '/streaming/?', to: 'streaming#index'
-  get '/streaming/string', to: 'streaming#string'
-  get '/streaming/eicar', to: 'streaming#eicar'
+    resource 'dashboard', only: [:show], format: false
 
-  get '/string/?', to: 'streaming#index'
-  get '/string/plain', to: 'streaming#plain'
-  get '/string/eicar', to: 'streaming#eicar'
-  get '/string/sleep', to: 'streaming#sleep'
-  get '/string/random', to: 'streaming#random'
+    get '/streaming/?', to: 'streaming#index'
+    get '/streaming/string', to: 'streaming#string'
+    get '/streaming/eicar', to: 'streaming#eicar'
 
-  get 'generator', to: 'generator#show', format: false
+    get '/string/?', to: 'streaming#index'
+    get '/string/plain', to: 'streaming#plain'
+    get '/string/eicar', to: 'streaming#eicar'
+    get '/string/sleep', to: 'streaming#sleep'
+    get '/string/random', to: 'streaming#random'
+
+    get 'generator', to: 'generator#show', format: false
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
