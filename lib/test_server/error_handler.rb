@@ -15,7 +15,7 @@ module TestServer
 
     public
 
-    attr_reader :exception
+    attr_reader :exception, :status_code
     attr_accessor :original_message
     attr_accessor :backtrace
 
@@ -24,6 +24,7 @@ module TestServer
       @details_i18n = options.fetch(:details)
       @summary_i18n = options.fetch(:summary)
       @exit_code    = options.fetch(:exit_code)
+      @status_code  = options.fetch(:status_code)
     rescue KeyError => e
       raise ArgumentError, e.message
     end
@@ -93,17 +94,21 @@ module TestServer
       Kernel.exit exit_code
     end
 
-    def to_json
+    def to_hash
       ErrorHandler.mutex.synchronize do
         @details ||= I18n.t(details_i18n)
         @summary ||= I18n.t(summary_i18n)
       end
 
-      JSON.dump(
-          error_summary: summary,
-          error_details: details,
-          result: :failure,
-      )
+      {
+        error_summary: summary,
+        error_details: details,
+        result: :failure,
+      }
+    end
+
+    def to_json
+      JSON.dump(to_hash)
     end
   end
 end

@@ -2,9 +2,7 @@
 module TestServer
   module App
     class DashboardController < ApplicationController
-      get :index, map: '/' do
-        render 'dashboard/index', layout: :application
-      end
+      def index; end
     end
   end
 end

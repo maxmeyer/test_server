@@ -4,47 +4,42 @@ module TestServer
     class StringController < ApplicationController
 
       before do
-        param :no_cache, Boolean, default: false
-        param :must_revalidate, Boolean, default: false
-        param :max_age, Integer
-        param :base64, Boolean, default: false
-
-        configure_caching(params)
+        params.merge! default_params
       end
 
-      get :index, map: '/' do
-        redirect to('/default/')
+      def index
+        redirect_to action: 'string'
       end
 
-      get :string, map: '/default' do
-        param :count, Integer, default: 1
-
-        encode do
-          generate_string(params[:count])
-        end
+      def string
+        render text: encode(string_params) { generate_string(string_params[:count]) }
       end
 
-      get :eicar, map: '/eicar' do
-        encode do
-          generate_eicar.join
-        end
+      def eicar
+        render text: encode(string_params) { generate_eicar.join }
       end
 
-      get :sleep, map: '/sleep' do
-        param :count, Integer, default: 120
-        sleep params[:count]
+      def sleep
+        sleep string_params[:count].to_i
 
-        encode do
-          generate_string(1)
-        end
+        render text: encode(string_params) { generate_string(1) }
       end
 
-      get :random, map: '/random' do
-        param :count, Integer, default: 10
+      def sleep
+        render text: encode(string_params) { generate_random_string(string_params[:count]) }
+      end
 
-        encode do
-          generate_random_string(params[:count])
-        end
+      private
+
+      def default_params
+        default_caching_params.merge(
+          base64: false,
+          gzip: false,
+        )
+      end
+
+      def string_params
+        caching_params.permit(:base64, :gzip)
       end
     end
   end

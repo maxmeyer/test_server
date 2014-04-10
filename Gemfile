@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+gem 'haml'
+gem 'haml-rails'
+
 gemspec
 
 group :doc do

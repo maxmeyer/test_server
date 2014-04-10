@@ -2,34 +2,30 @@
 module TestServer
   module App
     class JavascriptController < ApplicationController
-      #use Rack::Cors do 
-      #  allow do
-      #    origins '*'
-      #    resource '*', :headers => :any, :methods => [:get, :post]
-      #  end
-      #end
-
       before do
-        param :no_cache, Boolean, default: false
-        param :must_revalidate, Boolean, default: false
-        param :max_age, Integer
-        param :base64, Boolean, default: false
-
-        configure_caching(params)
+        params.merge! default_params
       end
 
-      get :url, map: '/xhr/url' do
-        param :count, Integer, default: 10
-        param :timeout, Integer, default: 1_000
-        param :url, String
-        param :repeat, String, default: 'false'
+      def url
 
-        @count   = params[:count]
-        @url     = params[:url]
-        @timeout = params[:timeout]
-        @repeat  = %w{ on yes true t }.include?(params[:repeat])
+        @count   = url_params[:count]
+        @url     = url_params[:url]
+        @timeout = url_params[:timeout]
+        @repeat  = %w{ on yes true t }.include?(url_params[:repeat])
+      end
 
-        render 'xhr/show', layout: :application
+      private
+
+      def default_params
+        {
+          count: 10,
+          timeout: 1_000,
+          repeat: 'false',
+        }
+      end
+
+      def url_params
+        params.permit(:count, :timeout, :url, :repeat)
       end
     end
   end

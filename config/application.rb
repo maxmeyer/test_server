@@ -27,5 +27,18 @@ module TestServer
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     config.middleware.use Rack::Deflater
+
+    # handle exceptions
+    config.exceptions_app = self.routes
+
+    # logging
+    config.logger = ActiveSupport::TaggedLogging.new(::Logger.new(TestServer.config.access_log))
+
+    # assets
+    config.assets.path << Rails.root.join('vendor', 'assets', 'components')
+    config.assets.cache = Sprockets::Cache::FileStore.new(TestServer.config.sass_cache)
+
+    # store for http caching
+    config.cache_store = :memory_store
   end
 end

@@ -1,22 +1,6 @@
 # encoding: utf-8
 module TestServer
   module WebHelper
-    def base_url
-      mutex = Mutex.new
-
-      mutex.synchronize do
-        @base_url ||= "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
-      end
-    end
-
-    def h(text)
-      Rack::Utils.escape_html(text)
-    end
-
-    def t(*args)
-      I18n.t(*args)
-    end
-
     def generate_string(count, string = "Plain Data\n")
       string * count
     end
@@ -36,23 +20,27 @@ module TestServer
         '+', 'H', '*' ]
     end
 
-    def configure_caching(params)
-      options = []
-
-      if params.key? 'expires'
-        options << :must_revalidate
-        options << :no_cache
-        options << { max_age: params[:expires] }
-      else
-        options << :must_revalidate              if params.key? 'must_revalidate'
-        options << :no_cache                     if params.key? 'no_cache'
-        options << { max_age: params[:max_age] } if params.key? 'max_age'
-      end
-
-      cache_control(*options)
+    def default_caching_params
+      {
+        no_cache: false,
+        must_revalidate: false,
+        base64: false,
+      }
     end
 
-    def encode(&block)
+    def caching_params
+      params.permit(:no_cache, :must_revalidate, :expires)
+    end
+
+    def configure_caching(params)
+      if params.key? 'expires'
+        expires_in params[:expires].to_i, public: true, must_revalidate: true
+      else
+        expires_now
+      end
+    end
+
+    def encode(params, &block)
       encoders = []
       encoders << Encoders::Base64.new
       encoders << Encoders::Base64Strict.new

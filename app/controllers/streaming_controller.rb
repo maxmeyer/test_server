@@ -1,51 +1,59 @@
 # encoding: utf-8
 module TestServer
   module App
-    WebApp.controller :streaming do
-      helpers Sinatra::Streaming
+    class StreamingController < ApplicationController
+      include ActionController::Live
 
       before do
-        param :base64, Boolean, default: false
+        content_type 'text/plain'
+        params.merge! default_params
       end
 
-      helpers do
-        def stream_data(&block)
-          content_type :stream
-          cache_control :no_cache, :must_revalidate
+      def index
+        redirect_to action: 'string'
+      end
 
-          stream(&block)
+      def string
+        response.stream.write(
+          encode(string_params) { "Data #{string_params[:count]} times repeated" }
+        )
+
+        string_params[:count].times do |n|
+          response.stream.write(
+            encode(string_params) { "#{n + 1}: data" }
+          )
+          sleep 1
         end
+
+        response.stream.close
       end
 
-      configure do
-        mime_type :stream, 'text/plain'
-      end
-
-      get :index, map: '/' do
-        redirect to('/default/')
-      end
-
-      get :string, map: '/default' do
-        param :count, Integer, default: 10
-
-        count = params[:count]
-
-        stream_data do |out|
-          out << encode { "Data #{count} times repeated" }
-
-          count.times do |n|
-            out << encode { "#{n + 1}: data" }
-            sleep 1
-          end
+      def eicar
+        generate_eicar.each do |c|
+          response.stream.write(
+            encode(eicar_params) { c }
+          )
         end
+
+        response.stream.close
       end
 
-      get :eicar, map: '/eicar' do
-        stream_data do |out|
-          generate_eicar.each do |c|
-            out << encode { c }
-          end
-        end
+      private
+
+      def string_params
+        caching_params.permit(:count, :base64, :gzip)
+      end
+
+      def eicar_params
+        caching_params.permit(:base64, :gzip)
+      end
+
+      def default_params
+        default_caching_params.merge(
+          count: 1,
+          base64: false,
+          gzip: false,
+        )
       end
     end
   end
