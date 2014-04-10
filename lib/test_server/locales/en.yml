@@ -56,7 +56,18 @@ en:
       link: Home
     test:
       link: Tests
+    string:
+      index: String Tests
+    streaming:
+      index: Streaming Tests
+    dashboard:
+      index:
+        title: Dashboard
     javascript:
+      index:
+        title: Javascript Tests
+      url:
+        title: Send requests via Javascript
       xhr:
         link: XHR
         title: 'Javascript Tests'

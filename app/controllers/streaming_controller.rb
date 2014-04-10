@@ -1,7 +1,7 @@
 # encoding: utf-8
 module TestServer
   module App
-    class StreamingController < ApplicationController
+    WebApp.controller :streaming do
       helpers Sinatra::Streaming
 
       before do

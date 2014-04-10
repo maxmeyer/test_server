@@ -1,3 +1,7 @@
+# encoding: utf-8
+require 'capybara/rspec'
+require 'capybara/rails'
+
 module TestServer
   module SpecHelper
     module Capybara

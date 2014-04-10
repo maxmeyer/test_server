@@ -1,0 +1,19 @@
+%h1
+  = t('views.dashboard.index.title')
+
+.ts-dashboard-section
+  %h2
+    = t('views.javascript.index.title')
+
+  %ol
+  - [ :url ].each do |action|
+    %li
+      = link_to t("views.javascript.#{action}.title"), url_for(action)
+
+.ts-dashboard-section
+  %h2
+    = t('views.string.index.title')
+
+.ts-dashboard-section
+  %h2
+    = t('views.streaming.index.title')
