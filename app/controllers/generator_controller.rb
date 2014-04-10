@@ -1,13 +1,12 @@
 # encoding: utf-8
 module TestServer
   module App
-    class JavascriptController < ApplicationController
+    class GeneratorController < ApplicationController
       before do
         params.merge! default_params
       end
 
-      def url
-
+      def show
         @count   = url_params[:count]
         @url     = url_params[:url]
         @timeout = url_params[:timeout]

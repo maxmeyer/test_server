@@ -11,7 +11,7 @@ module TestServer
         redirect_to action: 'string'
       end
 
-      def string
+      def plain
         render text: encode(string_params) { generate_string(string_params[:count]) }
       end
 
@@ -25,7 +25,7 @@ module TestServer
         render text: encode(string_params) { generate_string(1) }
       end
 
-      def sleep
+      def random
         render text: encode(string_params) { generate_random_string(string_params[:count]) }
       end
 

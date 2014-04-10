@@ -35,7 +35,7 @@ module TestServer
     config.logger = ActiveSupport::TaggedLogging.new(::Logger.new(TestServer.config.access_log))
 
     # assets
-    config.assets.path << Rails.root.join('vendor', 'assets', 'components')
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
     config.assets.cache = Sprockets::Cache::FileStore.new(TestServer.config.sass_cache)
 
     # store for http caching

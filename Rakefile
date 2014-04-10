@@ -1,12 +1,12 @@
 #!/usr/bin/env rake
 
-#require 'bundler'
-#Bundler.require :default, :test, :development
-
 require 'filegen'
 require 'fedux_org/stdlib/rake'
 require 'active_support/core_ext/string/inflections'
 require 'open3'
+
+require File.expand_path('../config/application', __FILE__)
+Rails.application.load_tasks
 
 def software
   gemspec.name
