@@ -1,24 +1,11 @@
 # encoding: utf-8
 module TestServer
   module App
-    class ApplicationController < Sinatra::Base
-      set :root, ::File.expand_path('../../', __FILE__)
-      set :haml, :format => :html5
-
-      enable :protect_from_csrf
-      enable :protection
-      enable :session
-      enable :report_csrf_failure
-
-      register Padrino::Helpers
-      register Padrino::Routing
-
-      use Rack::Deflater
-      use Rack::Locale
-      use Rack::NestedParams
-      use Rack::PostBodyContentTypeParser
-
-      helpers Sinatra::Param
+    class ApplicationController < ActionController::Base
+      # Prevent CSRF attacks by raising an exception.
+      # For APIs, you may want to use :null_session instead.
+      protect_from_forgery with: :exception
+    end
 
       error do
         handler = ErrorHandler.find(StandardError)

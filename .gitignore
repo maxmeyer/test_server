@@ -17,3 +17,5 @@ test/version_tmp
 tmp
 *.xz
 PKGBUILD
+db/*
+!db/migrations

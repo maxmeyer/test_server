@@ -29,12 +29,12 @@ module TestServer
       exit_code: 3,
     )
 
-    ErrorHandler.create(
-      exception: Sinatra::Param::InvalidParameterError,
-      details: 'errors.invalid_parameter.details',
-      summary: 'errors.invalid_parameter.summary',
-      exit_code: 4,
-    )
+    #ErrorHandler.create(
+    #  exception: Sinatra::Param::InvalidParameterError,
+    #  details: 'errors.invalid_parameter.details',
+    #  summary: 'errors.invalid_parameter.summary',
+    #  exit_code: 4,
+    #)
 
     ErrorHandler.create(
       exception: Exceptions::PidFileDoesNotExist,
